@@ -4,7 +4,7 @@
 
 | 前端         | 后端                 | 数据库  | 中间件  |
 | ------------ | -------------------- | ------- | ------- |
-| Vue          | Spring Gateway       | Postgres| RocketMQ|
+| Vue          | Spring Gateway       | Mysql   | RocketMQ|
 | Element Plus | Spring Boot          | Redis   | Nacos   |
 |              | Dubbo                | Minio   | XXL-Job |
 
