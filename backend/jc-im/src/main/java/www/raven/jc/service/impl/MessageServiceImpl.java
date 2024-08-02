@@ -140,6 +140,7 @@ public class MessageServiceImpl implements MessageService {
     return messageVos;
   }
 
+
   @Override
   public List<MessageReadAck> getReadMessageAck() {
     int userId = RequestUtil.getUserId(request);

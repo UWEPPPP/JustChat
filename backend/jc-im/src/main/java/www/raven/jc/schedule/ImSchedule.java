@@ -102,8 +102,6 @@ public class ImSchedule {
         log.info("没有需要处理的消息");
         return;
       }
-      // 清空Redis中的消息
-      map.clear();
 
       // 批量保存消息
       messageDAO.saveBatch(messages);
@@ -111,6 +109,11 @@ public class ImSchedule {
 
       // 批量更新最后一条消息
       updateLastMessages(messages);
+      log.info("成功更新最后消息");
+
+      //根据messages清除map中的消息
+      messages.forEach(message -> map.remove(message.getId()));
+      log.info("成功清除缓存中的消息");
     } catch (Exception e) {
       log.error("批量保存消息失败", e);
     }

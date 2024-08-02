@@ -61,7 +61,9 @@ public class MessageController {
   }
 
   /**
-   * 供轮询拉取的已读回执接口
+   * 业务设计背景：用户只能看到自己发出的消息是否被已读
+   * <p>
+   * 获取用户自己消息的已读回执 供前端轮询获取
    */
   @GetMapping("/getReadMessageAck")
   public HttpResult<List<MessageReadAck>> getReadMessageAck() {
