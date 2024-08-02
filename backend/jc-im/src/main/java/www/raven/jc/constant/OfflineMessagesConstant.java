@@ -9,7 +9,8 @@ import java.time.Duration;
  * @date 2024/02/28
  */
 public class OfflineMessagesConstant {
-    public static final String PREFIX = "offline_message_";
-    public static final String PREFIX_MATCH = "offline_message_*";
-    public static final Duration EXPIRE_DAYS = Duration.ofDays(7);
+
+  public static final String PREFIX = "offline_message_";
+  public static final String PREFIX_MATCH = "offline_message_*";
+  public static final Duration EXPIRE_DAYS = Duration.ofDays(7);
 }

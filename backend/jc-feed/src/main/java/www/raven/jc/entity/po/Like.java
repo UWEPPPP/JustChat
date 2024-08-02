@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import www.raven.jc.model.CommonSerializable;
+import www.raven.jc.serializable.CommonSerializable;
 
 /**
  * like
@@ -17,8 +17,9 @@ import www.raven.jc.model.CommonSerializable;
 @Accessors(chain = true)
 @TableName(value = "like", schema = "public")
 public class Like extends CommonSerializable {
-    private String id;
-    private Integer userId;
-    private String momentId;
-    private Long timestamp;
+
+  private String id;
+  private Integer userId;
+  private String momentId;
+  private Long timestamp;
 }

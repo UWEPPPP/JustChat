@@ -11,34 +11,34 @@ import www.raven.jc.dto.UserInfoDTO;
  */
 public interface FriendService {
 
-    /**
-     * get friend infos
-     *
-     * @param userId user id
-     * @return {@link List}<{@link UserInfoDTO}>
-     */
-    List<UserInfoDTO> getFriendInfos(int userId);
+  /**
+   * get friend infos
+   *
+   * @param userId user id
+   * @return {@link List}<{@link UserInfoDTO}>
+   */
+  List<UserInfoDTO> getFriendInfos(int userId);
 
-    /**
-     * add apply friend
-     *
-     * @param friendId friend id
-     * @param noticeId notice id
-     */
-    void agreeApplyFromFriend(int friendId, int noticeId);
+  /**
+   * add apply friend
+   *
+   * @param friendId friend id
+   * @param noticeId notice id
+   */
+  void agreeApplyFromFriend(int friendId, int noticeId);
 
-    /**
-     * refused to apply from friend
-     *
-     * @param noticeId notice id
-     */
-    void refuseApplyFromFriend(int noticeId);
+  /**
+   * refused to apply from friend
+   *
+   * @param noticeId notice id
+   */
+  void refuseApplyFromFriend(int noticeId);
 
-    /**
-     * get friend and me infos
-     *
-     * @param i i
-     * @return {@link List}<{@link UserInfoDTO}>
-     */
-    List<UserInfoDTO> getFriendAndMeInfos(int i);
+  /**
+   * get friend and me infos
+   *
+   * @param i i
+   * @return {@link List}<{@link UserInfoDTO}>
+   */
+  List<UserInfoDTO> getFriendAndMeInfos(int i);
 }

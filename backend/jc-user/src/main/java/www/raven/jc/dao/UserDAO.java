@@ -13,4 +13,5 @@ import www.raven.jc.entity.po.User;
  */
 @Repository
 public class UserDAO extends ServiceImpl<UserMapper, User> {
+
 }

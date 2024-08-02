@@ -13,4 +13,5 @@ import www.raven.jc.entity.po.UserRoom;
  */
 @Repository
 public class UserRoomDAO extends ServiceImpl<UserRoomMapper, UserRoom> {
+
 }

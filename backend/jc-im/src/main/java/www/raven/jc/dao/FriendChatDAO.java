@@ -13,4 +13,5 @@ import www.raven.jc.entity.po.FriendChat;
  */
 @Repository
 public class FriendChatDAO extends ServiceImpl<FriendChatMapper, FriendChat> {
+
 }

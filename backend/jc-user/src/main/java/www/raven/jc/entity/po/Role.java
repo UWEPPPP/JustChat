@@ -16,9 +16,10 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class Role {
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-    private String name;
-    private String value;
-    private Integer userCount;
+
+  @TableId(value = "id", type = IdType.AUTO)
+  private Integer id;
+  private String name;
+  private String value;
+  private Integer userCount;
 }

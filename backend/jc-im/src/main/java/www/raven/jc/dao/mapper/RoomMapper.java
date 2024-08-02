@@ -12,12 +12,13 @@ import www.raven.jc.entity.po.Room;
  * @date 2023/11/23
  */
 public interface RoomMapper extends BaseMapper<Room> {
-    /**
-     * select room by user id 联查
-     *
-     * @param userId user id
-     * @return {@link List}<{@link Room}>
-     */
-    List<Room> selectRoomByUserId(@Param("userId") int userId);
+
+  /**
+   * select room by user id 联查
+   *
+   * @param userId user id
+   * @return {@link List}<{@link Room}>
+   */
+  List<Room> selectRoomByUserId(@Param("userId") int userId);
 }
 

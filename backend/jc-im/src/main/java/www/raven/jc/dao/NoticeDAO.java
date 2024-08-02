@@ -13,4 +13,5 @@ import www.raven.jc.entity.po.Notice;
  */
 @Repository
 public class NoticeDAO extends ServiceImpl<NoticeMapper, Notice> {
+
 }

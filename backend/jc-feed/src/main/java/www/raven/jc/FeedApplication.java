@@ -21,7 +21,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAspectJAutoProxy
 @MapperScan("www.raven.jc.dao")
 public class FeedApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(FeedApplication.class, args);
-    }
+
+  public static void main(String[] args) {
+    SpringApplication.run(FeedApplication.class, args);
+  }
 }

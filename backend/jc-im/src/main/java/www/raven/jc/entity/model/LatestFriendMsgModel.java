@@ -14,7 +14,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class LatestFriendMsgModel {
-    @NotNull(message = "friendId不能为空")
-    @Min(value = 1, message = "friendId最小为1")
-    private Integer friendId;
+
+  @NotNull(message = "friendId不能为空")
+  @Min(value = 1, message = "friendId最小为1")
+  private Integer friendId;
 }

@@ -3,7 +3,7 @@ package www.raven.jc.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import www.raven.jc.model.CommonSerializable;
+import www.raven.jc.serializable.CommonSerializable;
 
 /**
  * query user info dto
@@ -15,6 +15,7 @@ import www.raven.jc.model.CommonSerializable;
 @Data
 @Accessors(chain = true)
 public class QueryUserInfoDTO extends CommonSerializable {
-    private String column;
-    private String text;
+
+  private String column;
+  private String text;
 }

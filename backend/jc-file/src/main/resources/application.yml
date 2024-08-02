@@ -1,7 +1,6 @@
 spring:
   redis:
     address: redis://10.21.32.221:6379
-    password: 123456
   servlet:
     multipart:
       max-file-size: 10MB
@@ -13,6 +12,9 @@ spring:
     nacos:
       discovery:
         server-addr: 10.21.32.154:8848
+  data:
+    redis:
+      password: 123456
 server:
   port: 8888
 minio:

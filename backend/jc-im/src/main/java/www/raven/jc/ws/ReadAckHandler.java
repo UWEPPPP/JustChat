@@ -25,34 +25,36 @@ import www.raven.jc.util.JsonUtil;
 @Slf4j
 @Component
 public class ReadAckHandler implements BaseHandler {
-    @Autowired
-    private UserRoomDAO userRoomDAO;
-    @Autowired
-    private MessageReadAckDAO messageReadAckDAO;
 
-    @Override
-    @Transactional(rollbackFor = RuntimeException.class)
-    public void onMessage(MessageDTO message, Session session) {
-        List<String> msgIds = Arrays.asList(JsonUtil.jsonToObj(message.getText(), String[].class));
-        //更新最后ack时间
-        UserRoom userRoom = userRoomDAO.getById(message.getBelongId());
-        Date time = userRoom.getLastAckTime();
-        if (time != null && time.getTime() > message.getTime()) {
-            log.error("ack time error");
-            session.getAsyncRemote().sendText("ack: time error");
-            return;
-        }
-        userRoom.setLastAckTime(new Date(message.getTime()));
-        userRoomDAO.getBaseMapper().updateById(userRoom);
-        //批量更新Ack
-        List<MessageReadAck> readAckList = messageReadAckDAO.list(new QueryWrapper<MessageReadAck>().eq("receiver_id", message.getBelongId())
-            .eq("room_id", message.getBelongId()).in("message_id", msgIds));
-        readAckList.forEach(messageAck -> messageAck.setIfRead(true));
-        if (messageReadAckDAO.updateBatchById(readAckList)) {
-            session.getAsyncRemote().sendText("ack: success");
-        } else {
-            session.getAsyncRemote().sendText("ack: fail");
-            throw new RuntimeException("ack fail");
-        }
+  @Autowired
+  private UserRoomDAO userRoomDAO;
+  @Autowired
+  private MessageReadAckDAO messageReadAckDAO;
+
+  @Override
+  @Transactional(rollbackFor = RuntimeException.class)
+  public void onMessage(MessageDTO message, Session session) {
+    List<String> msgIds = Arrays.asList(JsonUtil.jsonToObj(message.getText(), String[].class));
+    //更新最后ack时间
+    UserRoom userRoom = userRoomDAO.getById(message.getBelongId());
+    Date time = userRoom.getLastAckTime();
+    if (time != null && time.getTime() > message.getTime()) {
+      log.error("ack time error");
+      session.getAsyncRemote().sendText("ack: time error");
+      return;
     }
+    userRoom.setLastAckTime(new Date(message.getTime()));
+    userRoomDAO.getBaseMapper().updateById(userRoom);
+    //批量更新Ack
+    List<MessageReadAck> readAckList = messageReadAckDAO.list(
+        new QueryWrapper<MessageReadAck>().eq("receiver_id", message.getBelongId())
+            .eq("room_id", message.getBelongId()).in("message_id", msgIds));
+    readAckList.forEach(messageAck -> messageAck.setIfRead(true));
+    if (messageReadAckDAO.updateBatchById(readAckList)) {
+      session.getAsyncRemote().sendText("ack: success");
+    } else {
+      session.getAsyncRemote().sendText("ack: fail");
+      throw new RuntimeException("ack fail");
+    }
+  }
 }

@@ -1,45 +1,45 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>www.Raven</groupId>
-        <artifactId>jc-common</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>common-mp</artifactId>
+  <dependencies>
 
-    <artifactId>common-mp</artifactId>
-    <packaging>jar</packaging>
+    <dependency>
+      <artifactId>mybatis-spring</artifactId>
+      <groupId>org.mybatis</groupId>
+      <version>3.0.3</version>
+    </dependency>
+    <dependency>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>mybatis-spring</artifactId>
+          <groupId>org.mybatis</groupId>
+        </exclusion>
+      </exclusions>
+      <groupId>com.baomidou</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>postgresql</artifactId>
+      <groupId>org.postgresql</groupId>
+      <version>42.7.3</version>
+    </dependency>
+    <!--        <dependency>-->
+    <!--            <groupId>mysql</groupId>-->
+    <!--            <artifactId>mysql-connector-java</artifactId>-->
+    <!--            <scope>runtime</scope>-->
+    <!--        </dependency>-->
+  </dependencies>
 
-    <name>common-mp</name>
-    <url>http://maven.apache.org</url>
+  <modelVersion>4.0.0</modelVersion>
+  <name>common-mp</name>
 
-    <dependencies>
+  <packaging>jar</packaging>
+  <parent>
+    <artifactId>jc-common</artifactId>
+    <groupId>www.Raven</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
 
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis-spring</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.3</version>
-        </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>mysql</groupId>-->
-        <!--            <artifactId>mysql-connector-java</artifactId>-->
-        <!--            <scope>runtime</scope>-->
-        <!--        </dependency>-->
-    </dependencies>
+  <url>http://maven.apache.org</url>
 </project>

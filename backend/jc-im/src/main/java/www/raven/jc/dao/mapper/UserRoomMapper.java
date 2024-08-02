@@ -10,4 +10,5 @@ import www.raven.jc.entity.po.UserRoom;
  * @date 2023/12/04
  */
 public interface UserRoomMapper extends BaseMapper<UserRoom> {
+
 }

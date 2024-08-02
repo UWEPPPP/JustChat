@@ -7,7 +7,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class ChunkVO {
-    private String uploadId;
-    private List<String> urls;
-    private String previewUrl;
+
+  private String uploadId;
+  private List<String> urls;
+  private String previewUrl;
 }

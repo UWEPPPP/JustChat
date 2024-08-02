@@ -32,36 +32,38 @@ import www.raven.jc.util.MqUtil;
 @Slf4j
 @Component
 public class RoomHandler implements BaseHandler {
-    @Autowired
-    private MessageService messageService;
-    @Autowired
-    private UserRpcService userRpcService;
-    @Autowired
-    private RocketMQTemplate rocketMQTemplate;
-    @Autowired
-    private RedissonClient redissonClient;
-    @Autowired
-    private UserRoomDAO userRoomDAO;
-    @Autowired
-    private ImProperty imProperty;
 
-    @Override
-    public void onMessage(MessageDTO message, Session session) {
-        //查找房间内的所有用户
-        Integer roomId = message.getBelongId();
-        Message realMessage = new Message().setSenderId(message.getBelongId())
-            .setContent(message.getText())
-            .setTimestamp(new Date(message.getTime()))
-            .setReceiverId(String.valueOf(roomId))
-            .setType(message.getType());
-        List<Integer> userIds = userRoomDAO.getBaseMapper().selectList(new QueryWrapper<UserRoom>().eq("room_id", message.getBelongId())).stream()
-            .map(UserRoom::getUserId).collect(Collectors.toList());
-        messageService.saveOfflineMsgAndReadAck(realMessage, userIds);
-        broadcast(redissonClient, userIds, message, rocketMQTemplate);
-        MqUtil.sendMsg(rocketMQTemplate, ImImMqConstant.TAGS_SAVE_HISTORY_MSG,
-            imProperty.getInTopic(), JsonUtil.objToJson(new SaveMsgEvent().setMessage(realMessage)
-                .setType(MessageConstant.ROOM)));
-    }
+  @Autowired
+  private MessageService messageService;
+  @Autowired
+  private UserRpcService userRpcService;
+  @Autowired
+  private RocketMQTemplate rocketMQTemplate;
+  @Autowired
+  private RedissonClient redissonClient;
+  @Autowired
+  private UserRoomDAO userRoomDAO;
+  @Autowired
+  private ImProperty imProperty;
+
+  @Override
+  public void onMessage(MessageDTO message, Session session) {
+    //查找房间内的所有用户
+    Integer roomId = message.getBelongId();
+    Message realMessage = new Message().setSenderId(message.getBelongId())
+        .setContent(message.getText())
+        .setTimestamp(new Date(message.getTime()))
+        .setReceiverId(String.valueOf(roomId))
+        .setType(message.getType());
+    List<Integer> userIds = userRoomDAO.getBaseMapper()
+        .selectList(new QueryWrapper<UserRoom>().eq("room_id", message.getBelongId())).stream()
+        .map(UserRoom::getUserId).collect(Collectors.toList());
+    messageService.saveOfflineMsgAndReadAck(realMessage, userIds);
+    broadcast(redissonClient, userIds, message, rocketMQTemplate);
+    MqUtil.sendMsg(rocketMQTemplate, ImImMqConstant.TAGS_SAVE_HISTORY_MSG,
+        imProperty.getInTopic(), JsonUtil.objToJson(new SaveMsgEvent().setMessage(realMessage)
+            .setType(MessageConstant.ROOM)));
+  }
 
 }
 

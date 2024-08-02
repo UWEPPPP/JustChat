@@ -8,7 +8,6 @@ spring:
       max-request-size: 10MB
   redis:
     address: redis://10.21.32.221:6379
-    password: 123456
   application:
     name: JC-Gateway
   cloud:
@@ -54,6 +53,9 @@ spring:
     nacos:
       discovery:
         server-addr: 10.21.32.154:8848
+  data:
+    redis:
+      password: 123456
 server:
   port: 7000
 security:

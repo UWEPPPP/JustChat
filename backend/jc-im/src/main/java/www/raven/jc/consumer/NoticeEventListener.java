@@ -1,7 +1,6 @@
 package www.raven.jc.consumer;
 
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +15,6 @@ import www.raven.jc.api.UserRpcService;
 import www.raven.jc.constant.ImImMqConstant;
 import www.raven.jc.constant.ImUserMqConstant;
 import www.raven.jc.constant.JwtConstant;
-import www.raven.jc.constant.MessageConstant;
 import www.raven.jc.constant.NoticeConstant;
 import www.raven.jc.constant.SocialUserMqConstant;
 import www.raven.jc.dao.FriendChatDAO;
@@ -26,10 +24,7 @@ import www.raven.jc.dao.RoomDAO;
 import www.raven.jc.dto.UserInfoDTO;
 import www.raven.jc.entity.event.MomentNoticeEvent;
 import www.raven.jc.entity.event.RoomApplyEvent;
-import www.raven.jc.entity.event.SaveMsgEvent;
-import www.raven.jc.entity.po.FriendChat;
 import www.raven.jc.entity.po.Notice;
-import www.raven.jc.entity.po.Room;
 import www.raven.jc.event.model.DeleteNoticeEvent;
 import www.raven.jc.result.RpcResult;
 import www.raven.jc.template.AbstractMqListener;
@@ -71,9 +66,6 @@ public class NoticeEventListener extends AbstractMqListener {
       case ImImMqConstant.TAGS_CHAT_ROOM_APPLY:
         eventUserJoinRoomApply(message);
         break;
-      case ImImMqConstant.TAGS_SAVE_HISTORY_MSG:
-        eventSaveMsg(message);
-        break;
       case SocialUserMqConstant.TAGS_MOMENT_NOTICE_MOMENT_FRIEND:
         eventMomentNoticeFriendEvent(message);
         break;
@@ -86,27 +78,6 @@ public class NoticeEventListener extends AbstractMqListener {
       default:
         log.info("--RocketMq 非法的消息，不处理");
     }
-  }
-
-  private void eventSaveMsg(String msg) {
-    SaveMsgEvent payload = parseMessage(msg, SaveMsgEvent.class);
-    //保存进入历史消息db
-    messageDAO.getBaseMapper().insert(payload.getMessage());
-    if (payload.getMessage().getType().equals(MessageConstant.ROOM)) {
-      //更新群聊的最后一条消息
-      Assert.isTrue(roomDAO.getBaseMapper().updateById(
-          new Room().setRoomId(Integer.valueOf(payload.getMessage().getReceiverId()))
-              .setLastMsgId(payload.getMessage().getId())) > 0, "更新失败");
-    } else if (payload.getMessage().getType().equals(MessageConstant.FRIEND)) {
-      //更新好友的最后一条消息id
-      FriendChat friendChat = friendChatDAO.getBaseMapper().selectOne(
-          new QueryWrapper<FriendChat>().eq("fix_id", payload.getMessage().getReceiverId()));
-      Assert.notNull(friendChat, "好友不存在");
-      int i = friendChatDAO.getBaseMapper()
-          .updateById(friendChat.setLastMsgId(payload.getMessage().getId()));
-      Assert.isTrue(i > 0, "更新失败");
-    }
-
   }
 
   private void eventMomentNoticeFriendEvent(String msg) {

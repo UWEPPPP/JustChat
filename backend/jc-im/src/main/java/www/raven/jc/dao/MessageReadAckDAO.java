@@ -7,4 +7,5 @@ import www.raven.jc.entity.po.MessageReadAck;
 
 @Repository
 public class MessageReadAckDAO extends ServiceImpl<MessageReadAckMapper, MessageReadAck> {
+
 }

@@ -26,42 +26,43 @@ import www.raven.jc.service.SocialService;
 @RestController
 @ResponseBody
 public class SocialController {
-    @Autowired
-    private SocialService socialService;
-    @Autowired
-    private HttpServletRequest request;
 
-    @GetMapping("/queryMoment/{page}/{size}")
-    public HttpResult<List<MomentVO>> queryMoment(
-        @PathVariable("page") int page, @PathVariable("size") int size) {
-        return HttpResult.operateSuccess("查询成功", socialService.queryMoment(page, size));
-    }
+  @Autowired
+  private SocialService socialService;
+  @Autowired
+  private HttpServletRequest request;
 
-    @PostMapping("/releaseMoment")
-    public HttpResult<Void> releaseMoment(
-        @RequestBody @Validated MomentModel model) {
-        socialService.releaseMoment(model);
-        return HttpResult.operateSuccess("发布成功");
-    }
+  @GetMapping("/queryMoment/{page}/{size}")
+  public HttpResult<List<MomentVO>> queryMoment(
+      @PathVariable("page") int page, @PathVariable("size") int size) {
+    return HttpResult.operateSuccess("查询成功", socialService.queryMoment(page, size));
+  }
 
-    @PostMapping("/deleteMoment/{momentId}")
-    public HttpResult<Void> deleteMoment(
-        @PathVariable("momentId") @Validated String momentId) {
-        socialService.deleteMoment(momentId);
-        return HttpResult.operateSuccess("删除成功");
-    }
+  @PostMapping("/releaseMoment")
+  public HttpResult<Void> releaseMoment(
+      @RequestBody @Validated MomentModel model) {
+    socialService.releaseMoment(model);
+    return HttpResult.operateSuccess("发布成功");
+  }
 
-    @PostMapping("/likeMoment")
-    public HttpResult<Void> likeMoment(
-        @RequestBody @Validated LikeModel model) {
-        socialService.likeMoment(model);
-        return HttpResult.operateSuccess("点赞成功");
-    }
+  @PostMapping("/deleteMoment/{momentId}")
+  public HttpResult<Void> deleteMoment(
+      @PathVariable("momentId") @Validated String momentId) {
+    socialService.deleteMoment(momentId);
+    return HttpResult.operateSuccess("删除成功");
+  }
 
-    @PostMapping("/commentMoment")
-    public HttpResult<Void> commentMoment(
-        @RequestBody @Validated CommentModel model) {
-        socialService.commentMoment(model);
-        return HttpResult.operateSuccess("评论成功");
-    }
+  @PostMapping("/likeMoment")
+  public HttpResult<Void> likeMoment(
+      @RequestBody @Validated LikeModel model) {
+    socialService.likeMoment(model);
+    return HttpResult.operateSuccess("点赞成功");
+  }
+
+  @PostMapping("/commentMoment")
+  public HttpResult<Void> commentMoment(
+      @RequestBody @Validated CommentModel model) {
+    socialService.commentMoment(model);
+    return HttpResult.operateSuccess("评论成功");
+  }
 }

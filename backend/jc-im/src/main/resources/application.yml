@@ -31,7 +31,6 @@ spring:
       enabled: true
   redis:
     address: redis://10.21.32.221:6379
-    password: 123456
   cache:
     type: redis
     #指定存活时间（ms）
@@ -48,6 +47,9 @@ spring:
     url: jdbc:postgresql://10.21.32.192:5432/postgres
     username: postgres
     password: 123456
+  data:
+    redis:
+      password: 123456
 server:
   port: 8881
 jwt:

@@ -10,4 +10,5 @@ import www.raven.jc.entity.po.Message;
  * @date 2024/02/23
  */
 public interface MessageMapper extends BaseMapper<Message> {
+
 }

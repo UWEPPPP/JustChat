@@ -15,36 +15,37 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SecurityProperty {
-    @Value("${security.paths.permitAll}")
-    public String[] auth;
 
-    @Value("${security.paths.hasAnyRoleUserAdmin}")
-    public String[] users;
+  @Value("${security.paths.permitAll}")
+  public String[] auth;
 
-    @Value("${security.paths.hasRoleAdmin}")
-    public String[] admins;
+  @Value("${security.paths.hasAnyRoleUserAdmin}")
+  public String[] users;
 
-    @Value("${security.roles.user}")
-    public String roleUser;
+  @Value("${security.paths.hasRoleAdmin}")
+  public String[] admins;
 
-    @Value("${security.roles.admin}")
-    public String roleAdmin;
+  @Value("${security.roles.user}")
+  public String roleUser;
 
-    @Getter
-    private String[] wordsArray;
+  @Value("${security.roles.admin}")
+  public String roleAdmin;
 
-    @PostConstruct
-    public void init() {
-        List<String> words = new ArrayList<>();
-        for (String part : auth) {
-            String[] subParts = part.split("/");
-            for (String subPart : subParts) {
-                if (!subPart.isEmpty() && !"**".equals(subPart)) {
-                    words.add(subPart);
-                }
-            }
+  @Getter
+  private String[] wordsArray;
+
+  @PostConstruct
+  public void init() {
+    List<String> words = new ArrayList<>();
+    for (String part : auth) {
+      String[] subParts = part.split("/");
+      for (String subPart : subParts) {
+        if (!subPart.isEmpty() && !"**".equals(subPart)) {
+          words.add(subPart);
         }
-        wordsArray = words.toArray(new String[0]);
+      }
     }
+    wordsArray = words.toArray(new String[0]);
+  }
 
 }

@@ -10,4 +10,5 @@ import www.raven.jc.entity.po.Like;
  * @date 2024/04/21
  */
 public interface LikeMapper extends BaseMapper<Like> {
+
 }

@@ -36,7 +36,6 @@ spring:
       add-mappings: false
   redis:
     address: redis://10.21.32.221:6379
-    password: 123456
   application:
     name: JC-User
   cloud:
@@ -47,6 +46,9 @@ spring:
     url: jdbc:postgresql://10.21.32.192:5432/postgres
     username: postgres
     password: 123456
+  data:
+    redis:
+      password: 123456
 mq:
   out_topic: ToIM
 server:

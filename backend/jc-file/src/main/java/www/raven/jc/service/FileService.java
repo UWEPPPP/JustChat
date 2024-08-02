@@ -9,19 +9,20 @@ import www.raven.jc.entity.vo.ChunkVO;
 import www.raven.jc.entity.vo.GetUrlVO;
 
 public interface FileService {
-    /**
-     * 服务端上传文件的方式
-     */
-    void upload(UploadBO uploadBO) throws IOException;
 
-    /**
-     * 获得预签名URL
-     */
-    GetUrlVO getPresignedUrl(GetUrlBO getUrlBO);
+  /**
+   * 服务端上传文件的方式
+   */
+  void upload(UploadBO uploadBO) throws IOException;
 
-    ChunkVO getPresignedUrlForChunk(ChunkUploadBO uploadBO);
+  /**
+   * 获得预签名URL
+   */
+  GetUrlVO getPresignedUrl(GetUrlBO getUrlBO);
 
-    void chunkCompose(ChunkMergeBO chunkMergeBO);
+  ChunkVO getPresignedUrlForChunk(ChunkUploadBO uploadBO);
 
-    String getUrl(String objectName);
+  void chunkCompose(ChunkMergeBO chunkMergeBO);
+
+  String getUrl(String objectName);
 }

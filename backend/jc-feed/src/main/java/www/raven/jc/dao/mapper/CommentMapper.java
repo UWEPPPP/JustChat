@@ -10,4 +10,5 @@ import www.raven.jc.entity.po.Comment;
  * @date 2024/04/21
  */
 public interface CommentMapper extends BaseMapper<Comment> {
+
 }

@@ -17,13 +17,14 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class User {
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-    private String username;
-    private String password;
-    private String profile;
-    private String email;
-    private String signature;
-    private Date lastOnlineTime;
+
+  @TableId(value = "id", type = IdType.AUTO)
+  private Integer id;
+  private String username;
+  private String password;
+  private String profile;
+  private String email;
+  private String signature;
+  private Date lastOnlineTime;
 
 }

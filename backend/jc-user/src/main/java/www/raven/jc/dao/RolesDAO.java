@@ -14,4 +14,5 @@ import www.raven.jc.entity.po.Role;
 
 @Repository
 public class RolesDAO extends ServiceImpl<RolesMapper, Role> {
+
 }

@@ -20,10 +20,11 @@ import www.raven.jc.model.CommonSerializable;
 @JsonSerialize
 @TableName(value = "moment", schema = "public")
 public class Moment extends CommonSerializable {
-    @TableId
-    private String id;
-    private Integer userId;
-    private String content;
-    private String img;
-    private Long timestamp;
+
+  @TableId
+  private String id;
+  private Integer userId;
+  private String content;
+  private String img;
+  private Long timestamp;
 }

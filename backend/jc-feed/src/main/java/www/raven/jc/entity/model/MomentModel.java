@@ -13,8 +13,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class MomentModel {
-    @NotBlank(message = "userId不能为空")
-    private String text;
-    @NotBlank(message = "img不能为空")
-    private String img;
+
+  @NotBlank(message = "userId不能为空")
+  private String text;
+  @NotBlank(message = "img不能为空")
+  private String img;
 }

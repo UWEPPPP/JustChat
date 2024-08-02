@@ -3,7 +3,7 @@ package www.raven.jc.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import www.raven.jc.model.CommonSerializable;
+import www.raven.jc.serializable.CommonSerializable;
 
 /**
  * user info vo
@@ -15,7 +15,8 @@ import www.raven.jc.model.CommonSerializable;
 @Data
 @Accessors(chain = true)
 public class UserInfoDTO extends CommonSerializable {
-    private Integer userId;
-    private String username;
-    private String profile;
+
+  private Integer userId;
+  private String username;
+  private String profile;
 }

@@ -7,6 +7,7 @@ package www.raven.jc.constant;
  * @date 2024/02/18
  */
 public class TimelineFeedConstant {
-    public static final String PREFIX = "moment_";
+
+  public static final String PREFIX = "moment_";
 
 }

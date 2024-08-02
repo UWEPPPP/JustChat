@@ -13,4 +13,5 @@ import www.raven.jc.entity.po.Friend;
  */
 @Repository
 public class FriendDAO extends ServiceImpl<FriendMapper, Friend> {
+
 }

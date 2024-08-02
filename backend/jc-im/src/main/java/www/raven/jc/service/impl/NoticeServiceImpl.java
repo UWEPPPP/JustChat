@@ -38,74 +38,77 @@ import www.raven.jc.ws.WebsocketService;
 @Service
 @Slf4j
 public class NoticeServiceImpl implements NoticeService {
-    @Autowired
-    private HttpServletRequest request;
-    @Autowired
-    private RedissonClient redissonClient;
-    @Autowired
-    private NoticeDAO noticeDAO;
-    @Autowired
-    private UserRpcService userRpcService;
 
-    @Override
-    public List<NoticeVO> loadNotice() {
-        int userId = RequestUtil.getUserId(request);
-        List<Notice> notices = noticeDAO.getBaseMapper().selectList(new QueryWrapper<Notice>().eq("user_id", userId).orderByDesc("timestamp"));
-        if (notices.isEmpty()) {
-            return new ArrayList<>();
+  @Autowired
+  private HttpServletRequest request;
+  @Autowired
+  private RedissonClient redissonClient;
+  @Autowired
+  private NoticeDAO noticeDAO;
+  @Autowired
+  private UserRpcService userRpcService;
+
+  @Override
+  public List<NoticeVO> loadNotice() {
+    int userId = RequestUtil.getUserId(request);
+    List<Notice> notices = noticeDAO.getBaseMapper()
+        .selectList(new QueryWrapper<Notice>().eq("user_id", userId).orderByDesc("timestamp"));
+    if (notices.isEmpty()) {
+      return new ArrayList<>();
+    }
+    List<Integer> ids = notices.stream().map(Notice::getSenderId).collect(Collectors.toList());
+    RpcResult<List<UserInfoDTO>> usersResult = userRpcService.getBatchInfo(ids);
+    Assert.isTrue(usersResult.isSuccess(), "获取用户信息失败");
+    Map<Integer, UserInfoDTO> map = usersResult.getData().stream().map(
+        user -> new UserInfoDTO().setUserId(user.getUserId()).setUsername(user.getUsername())
+            .setProfile(user.getProfile())
+    ).collect(Collectors.toMap(UserInfoDTO::getUserId, Function.identity()));
+    return notices.stream().map(
+        notice -> {
+          NoticeVO noticeVO = new NoticeVO();
+          noticeVO.setNoticeId(notice.getId())
+              .setType(notice.getType())
+              .setData(notice.getData())
+              .setTimestamp(notice.getTimestamp())
+              .setSender(map.get(notice.getSenderId()));
+          return noticeVO;
         }
-        List<Integer> ids = notices.stream().map(Notice::getSenderId).collect(Collectors.toList());
-        RpcResult<List<UserInfoDTO>> usersResult = userRpcService.getBatchInfo(ids);
-        Assert.isTrue(usersResult.isSuccess(), "获取用户信息失败");
-        Map<Integer, UserInfoDTO> map = usersResult.getData().stream().map(
-            user -> new UserInfoDTO().setUserId(user.getUserId()).setUsername(user.getUsername()).setProfile(user.getProfile())
-        ).collect(Collectors.toMap(UserInfoDTO::getUserId, Function.identity()));
-        return notices.stream().map(
-            notice -> {
-                NoticeVO noticeVO = new NoticeVO();
-                noticeVO.setNoticeId(notice.getId())
-                    .setType(notice.getType())
-                    .setData(notice.getData())
-                    .setTimestamp(notice.getTimestamp())
-                    .setSender(map.get(notice.getSenderId()));
-                return noticeVO;
-            }
-        ).collect(Collectors.toList());
+    ).collect(Collectors.toList());
+  }
+
+  @Transactional(rollbackFor = IllegalArgumentException.class)
+  @Override
+  public void addFriendApply(String friendName) {
+    int applierId = RequestUtil.getUserId(request);
+
+    RpcResult<UserInfoDTO> userResult = userRpcService.getSingleInfoByColumn(friendName);
+    Assert.isTrue(userResult.isSuccess(), "用户不存在");
+    UserInfoDTO friend = userResult.getData();
+    Assert.isNull(noticeDAO.getBaseMapper().selectOne(new QueryWrapper<Notice>().
+        eq("user_id", friend.getUserId()).eq("sender_id", applierId).
+        eq("type", NoticeConstant.TYPE_ADD_FRIEND_APPLY)), "已经申请过了");
+    Notice notice = new Notice().setUserId(friend.getUserId())
+        .setData("暂无")
+        .setType(NoticeConstant.TYPE_ADD_FRIEND_APPLY)
+        .setTimestamp(System.currentTimeMillis())
+        .setSenderId(applierId);
+    Assert.isTrue(noticeDAO.save(notice), "添加失败");
+
+    RBucket<String> friendBucket = redissonClient.getBucket(JwtConstant.TOKEN + friend.getUserId());
+    HashMap<Object, Object> map = new HashMap<>(1);
+    map.put("applyId", applierId);
+    map.put("type", ImUserMqConstant.TAGS_USER_FRIEND_APPLY);
+    if (friendBucket.isExists()) {
+      WebsocketService.sendOneMessage(friend.getUserId(), JsonUtil.objToJson(map));
+    } else {
+      log.info("receiver不在线");
     }
+  }
 
-    @Transactional(rollbackFor = IllegalArgumentException.class)
-    @Override
-    public void addFriendApply(String friendName) {
-        int applierId = RequestUtil.getUserId(request);
-
-        RpcResult<UserInfoDTO> userResult = userRpcService.getSingleInfoByColumn(friendName);
-        Assert.isTrue(userResult.isSuccess(), "用户不存在");
-        UserInfoDTO friend = userResult.getData();
-        Assert.isNull(noticeDAO.getBaseMapper().selectOne(new QueryWrapper<Notice>().
-            eq("user_id", friend.getUserId()).eq("sender_id", applierId).
-            eq("type", NoticeConstant.TYPE_ADD_FRIEND_APPLY)), "已经申请过了");
-        Notice notice = new Notice().setUserId(friend.getUserId())
-            .setData("暂无")
-            .setType(NoticeConstant.TYPE_ADD_FRIEND_APPLY)
-            .setTimestamp(System.currentTimeMillis())
-            .setSenderId(applierId);
-        Assert.isTrue(noticeDAO.save(notice), "添加失败");
-
-        RBucket<String> friendBucket = redissonClient.getBucket(JwtConstant.TOKEN + friend.getUserId());
-        HashMap<Object, Object> map = new HashMap<>(1);
-        map.put("applyId", applierId);
-        map.put("type", ImUserMqConstant.TAGS_USER_FRIEND_APPLY);
-        if (friendBucket.isExists()) {
-            WebsocketService.sendOneMessage(friend.getUserId(), JsonUtil.objToJson(map));
-        } else {
-            log.info("receiver不在线");
-        }
-    }
-
-    @Transactional(rollbackFor = IllegalArgumentException.class)
-    @Override
-    public void deleteNotification(Integer id) {
-        Assert.isTrue(noticeDAO.getBaseMapper().deleteById(id) == 1);
-    }
+  @Transactional(rollbackFor = IllegalArgumentException.class)
+  @Override
+  public void deleteNotification(Integer id) {
+    Assert.isTrue(noticeDAO.getBaseMapper().deleteById(id) == 1);
+  }
 
 }

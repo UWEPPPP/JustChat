@@ -13,4 +13,5 @@ import www.raven.jc.entity.po.Like;
  */
 @Repository
 public class LikeDAO extends ServiceImpl<LikeMapper, Like> {
+
 }

@@ -26,42 +26,45 @@ import www.raven.jc.service.RoomService;
 @ResponseBody
 @RequestMapping("/message")
 public class MessageController {
-    @Autowired
-    private MessageService messageService;
-    @Autowired
-    private RoomService roomService;
-    @Autowired
-    private FriendService friendService;
 
-    /**
-     * 拉取全量离线消息接口
-     */
-    @GetMapping("/getLatestOffline")
-    public HttpResult<List<MessageVO>> getLatestOfflineMsg() {
-        return HttpResult.operateSuccess("获取最新离线信息成功", messageService.getLatestOffline());
-    }
+  @Autowired
+  private MessageService messageService;
+  @Autowired
+  private RoomService roomService;
+  @Autowired
+  private FriendService friendService;
 
-    @GetMapping("/queryRoomMsgPages/{roomId}/{page}/{size}")
-    public HttpResult<List<MessageVO>> getGroupMsgHistory(
-        @PathVariable("roomId") int roomId, @PathVariable("page") int page,
-        @PathVariable("size") int size) {
-        PageGroupMsgModel model = new PageGroupMsgModel().setRoomId(roomId).setPage(page).setSize(size);
-        return HttpResult.operateSuccess("获取历史群聊信息成功", roomService.getGroupMsgPages(model));
-    }
+  /**
+   * 拉取全量离线消息接口
+   */
+  @GetMapping("/getLatestOffline")
+  public HttpResult<List<MessageVO>> getLatestOfflineMsg() {
+    return HttpResult.operateSuccess("获取最新离线信息成功", messageService.getLatestOffline());
+  }
 
-    @GetMapping("/queryFriendMsgPages/{friendId}/{page}/{size}")
-    public HttpResult<List<MessageVO>> getFriendMsgHistory(
-        @PathVariable("friendId") int friendId, @PathVariable("page") int page,
-        @PathVariable("size") int size) {
-        PagesFriendMsgModel model = new PagesFriendMsgModel().setFriendId(friendId).setPage(page).setSize(size);
-        return HttpResult.operateSuccess("获取历史私聊信息成功", friendService.getFriendMsgPages(model));
-    }
+  @GetMapping("/queryRoomMsgPages/{roomId}/{page}/{size}")
+  public HttpResult<List<MessageVO>> getGroupMsgHistory(
+      @PathVariable("roomId") int roomId, @PathVariable("page") int page,
+      @PathVariable("size") int size) {
+    PageGroupMsgModel model = new PageGroupMsgModel().setRoomId(roomId).setPage(page).setSize(size);
+    return HttpResult.operateSuccess("获取历史群聊信息成功", roomService.getGroupMsgPages(model));
+  }
 
-    /**
-     * 供轮询拉取的已读回执接口
-     */
-    @GetMapping("/getReadMessageAck")
-    public HttpResult<List<MessageReadAck>> getReadMessageAck() {
-        return HttpResult.operateSuccess("获取消息已读状态成功", messageService.getReadMessageAck());
-    }
+  @GetMapping("/queryFriendMsgPages/{friendId}/{page}/{size}")
+  public HttpResult<List<MessageVO>> getFriendMsgHistory(
+      @PathVariable("friendId") int friendId, @PathVariable("page") int page,
+      @PathVariable("size") int size) {
+    PagesFriendMsgModel model = new PagesFriendMsgModel().setFriendId(friendId).setPage(page)
+        .setSize(size);
+    return HttpResult.operateSuccess("获取历史私聊信息成功",
+        friendService.getFriendMsgPages(model));
+  }
+
+  /**
+   * 供轮询拉取的已读回执接口
+   */
+  @GetMapping("/getReadMessageAck")
+  public HttpResult<List<MessageReadAck>> getReadMessageAck() {
+    return HttpResult.operateSuccess("获取消息已读状态成功", messageService.getReadMessageAck());
+  }
 }

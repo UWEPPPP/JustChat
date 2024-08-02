@@ -13,7 +13,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class TokenDTO {
-    private Integer userId;
-    private List<String> role;
-    private Long expireTime;
+
+  private Integer userId;
+  private List<String> role;
+  private Long expireTime;
 }

@@ -31,55 +31,58 @@ import www.raven.jc.util.RequestUtil;
 @Service
 @Slf4j
 public class FriendServiceImpl implements FriendService {
-    @Autowired
-    private FriendDAO friendDAO;
-    @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private HttpServletRequest request;
-    @Autowired
-    private RocketMQTemplate rocketMQTemplate;
-    @Value("${mq.out_topic}")
-    private String outTopic;
 
-    @Override
-    public List<UserInfoDTO> getFriendInfos(int userId) {
-        return userDAO.getBaseMapper().selectUserByFriendId(userId).stream().map(
-            user -> new UserInfoDTO()
-                .setUserId(user.getId()).setUsername(user.getUsername()).setProfile(user.getProfile())
-        ).collect(Collectors.toList());
-    }
+  @Autowired
+  private FriendDAO friendDAO;
+  @Autowired
+  private UserDAO userDAO;
+  @Autowired
+  private HttpServletRequest request;
+  @Autowired
+  private RocketMQTemplate rocketMQTemplate;
+  @Value("${mq.out_topic}")
+  private String outTopic;
 
-    @Transactional(rollbackFor = IllegalArgumentException.class)
-    @Override
-    public void agreeApplyFromFriend(int friendId, int noticeId) {
-        int userId = RequestUtil.getUserId(request);
-        Friend friend = new Friend().setUserId((long) userId).setFriendId((long) friendId);
-        Friend friend1 = new Friend().setUserId((long) friendId).setFriendId((long) userId);
-        boolean b = friendDAO.saveBatch(List.of(friend, friend1));
-        Assert.isTrue(b, "成为好友失败");
-        MqUtil.sendMsg(rocketMQTemplate, ImUserMqConstant.TAGS_DELETE_NOTICE, outTopic, new DeleteNoticeEvent(noticeId));
-    }
+  @Override
+  public List<UserInfoDTO> getFriendInfos(int userId) {
+    return userDAO.getBaseMapper().selectUserByFriendId(userId).stream().map(
+        user -> new UserInfoDTO()
+            .setUserId(user.getId()).setUsername(user.getUsername()).setProfile(user.getProfile())
+    ).collect(Collectors.toList());
+  }
 
-    @Override
-    public void refuseApplyFromFriend(int noticeId) {
-        MqUtil.sendMsg(rocketMQTemplate, ImUserMqConstant.TAGS_DELETE_NOTICE, outTopic, new DeleteNoticeEvent(noticeId));
-    }
+  @Transactional(rollbackFor = IllegalArgumentException.class)
+  @Override
+  public void agreeApplyFromFriend(int friendId, int noticeId) {
+    int userId = RequestUtil.getUserId(request);
+    Friend friend = new Friend().setUserId((long) userId).setFriendId((long) friendId);
+    Friend friend1 = new Friend().setUserId((long) friendId).setFriendId((long) userId);
+    boolean b = friendDAO.saveBatch(List.of(friend, friend1));
+    Assert.isTrue(b, "成为好友失败");
+    MqUtil.sendMsg(rocketMQTemplate, ImUserMqConstant.TAGS_DELETE_NOTICE, outTopic,
+        new DeleteNoticeEvent(noticeId));
+  }
 
-    @Override
-    public List<UserInfoDTO> getFriendAndMeInfos(int userId) {
-        Collection<UserInfoDTO> values = userDAO.getBaseMapper().selectUsersAndFriends(userId).stream()
-            .map(user -> new UserInfoDTO()
-                .setUserId(user.getId())
-                .setUsername(user.getUsername())
-                .setProfile(user.getProfile()))
-            .collect(Collectors.toMap(
-                UserInfoDTO::getUserId,
-                Function.identity(),
-                (k, v) -> v
-            ))
-            .values();
-        return List.copyOf(values);
-    }
+  @Override
+  public void refuseApplyFromFriend(int noticeId) {
+    MqUtil.sendMsg(rocketMQTemplate, ImUserMqConstant.TAGS_DELETE_NOTICE, outTopic,
+        new DeleteNoticeEvent(noticeId));
+  }
+
+  @Override
+  public List<UserInfoDTO> getFriendAndMeInfos(int userId) {
+    Collection<UserInfoDTO> values = userDAO.getBaseMapper().selectUsersAndFriends(userId).stream()
+        .map(user -> new UserInfoDTO()
+            .setUserId(user.getId())
+            .setUsername(user.getUsername())
+            .setProfile(user.getProfile()))
+        .collect(Collectors.toMap(
+            UserInfoDTO::getUserId,
+            Function.identity(),
+            (k, v) -> v
+        ))
+        .values();
+    return List.copyOf(values);
+  }
 
 }

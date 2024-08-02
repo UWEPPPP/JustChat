@@ -14,5 +14,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @AllArgsConstructor
 public class DeleteNoticeEvent {
-    private int noticeId;
+
+  private int noticeId;
 }

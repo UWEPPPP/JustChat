@@ -11,4 +11,5 @@ import www.raven.jc.entity.po.Room;
  */
 @Repository
 public class RoomDAO extends ServiceImpl<RoomMapper, Room> {
+
 }

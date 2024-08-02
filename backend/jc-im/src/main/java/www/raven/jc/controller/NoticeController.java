@@ -26,18 +26,19 @@ import www.raven.jc.service.NoticeService;
 @RequestMapping("/notice")
 @Slf4j
 public class NoticeController {
-    @Autowired
-    private NoticeService noticeService;
 
-    @GetMapping("/getNotice")
-    public HttpResult<List<NoticeVO>> getNotice() {
-        return HttpResult.operateSuccess("查找成功", noticeService.loadNotice());
-    }
+  @Autowired
+  private NoticeService noticeService;
 
-    @PostMapping("/addFriendApply")
-    public HttpResult<Void> addFriendApply(
-        @RequestBody @NotNull AddFriendApplyModel model) {
-        noticeService.addFriendApply(model.getFriendName());
-        return HttpResult.operateSuccess("添加好友申请成功");
-    }
+  @GetMapping("/getNotice")
+  public HttpResult<List<NoticeVO>> getNotice() {
+    return HttpResult.operateSuccess("查找成功", noticeService.loadNotice());
+  }
+
+  @PostMapping("/addFriendApply")
+  public HttpResult<Void> addFriendApply(
+      @RequestBody @NotNull AddFriendApplyModel model) {
+    noticeService.addFriendApply(model.getFriendName());
+    return HttpResult.operateSuccess("添加好友申请成功");
+  }
 }

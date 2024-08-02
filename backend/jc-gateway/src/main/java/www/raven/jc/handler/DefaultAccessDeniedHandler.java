@@ -22,18 +22,18 @@ import www.raven.jc.util.JsonUtil;
 @Component
 public class DefaultAccessDeniedHandler implements ServerAccessDeniedHandler {
 
-    @Override
-    public Mono<Void> handle(ServerWebExchange exchange,
-        AccessDeniedException denied) {
-        return Mono.defer(() -> Mono.just(exchange.getResponse()))
-            .flatMap(response -> {
-                response.setStatusCode(HttpStatus.OK);
-                response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-                DataBufferFactory dataBufferFactory = response.bufferFactory();
-                String result = JsonUtil.objToJson(HttpResult.operateFailure("您权限不足"));
-                DataBuffer buffer = dataBufferFactory.wrap(result.getBytes(
-                    Charset.defaultCharset()));
-                return response.writeWith(Mono.just(buffer));
-            });
-    }
+  @Override
+  public Mono<Void> handle(ServerWebExchange exchange,
+      AccessDeniedException denied) {
+    return Mono.defer(() -> Mono.just(exchange.getResponse()))
+        .flatMap(response -> {
+          response.setStatusCode(HttpStatus.OK);
+          response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+          DataBufferFactory dataBufferFactory = response.bufferFactory();
+          String result = JsonUtil.objToJson(HttpResult.operateFailure("您权限不足"));
+          DataBuffer buffer = dataBufferFactory.wrap(result.getBytes(
+              Charset.defaultCharset()));
+          return response.writeWith(Mono.just(buffer));
+        });
+  }
 }

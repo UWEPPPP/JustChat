@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
- * token authentication manager
- * token 认证处理
+ * token authentication manager token 认证处理
  *
  * @author 刘家辉
  * @date 2023/11/28
@@ -17,9 +16,9 @@ import reactor.core.publisher.Mono;
 @Primary
 public class TokenAuthenticationManager implements ReactiveAuthenticationManager {
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public Mono<Authentication> authenticate(Authentication authentication) {
-        return Mono.just(authentication);
-    }
+  @Override
+  @SuppressWarnings("unchecked")
+  public Mono<Authentication> authenticate(Authentication authentication) {
+    return Mono.just(authentication);
+  }
 }

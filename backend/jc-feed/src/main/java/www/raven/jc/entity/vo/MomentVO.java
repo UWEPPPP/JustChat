@@ -15,12 +15,13 @@ import www.raven.jc.dto.UserInfoDTO;
 @Data
 @Accessors(chain = true)
 public class MomentVO implements Serializable {
-    private String momentId;
-    private UserInfoDTO userInfo;
-    private String content;
-    private String img;
-    private List<LikeVO> likes;
-    private List<CommentVO> comments;
-    private Long timestamp;
+
+  private String momentId;
+  private UserInfoDTO userInfo;
+  private String content;
+  private String img;
+  private List<LikeVO> likes;
+  private List<CommentVO> comments;
+  private Long timestamp;
 
 }

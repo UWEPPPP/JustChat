@@ -24,17 +24,17 @@ import www.raven.jc.util.JsonUtil;
 @Component
 public class DefaultAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
 
-    @Override
-    public Mono<Void> commence(ServerWebExchange exchange,
-        AuthenticationException ex) {
-        return Mono.defer(() -> Mono.just(exchange.getResponse())).flatMap(response -> {
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-            DataBufferFactory dataBufferFactory = response.bufferFactory();
-            String result = JsonUtil.objToJson(HttpResult.operateFailure("未认证"));
-            DataBuffer buffer = dataBufferFactory.wrap(result.getBytes(
-                Charset.defaultCharset()));
-            return response.writeWith(Mono.just(buffer));
-        });
-    }
+  @Override
+  public Mono<Void> commence(ServerWebExchange exchange,
+      AuthenticationException ex) {
+    return Mono.defer(() -> Mono.just(exchange.getResponse())).flatMap(response -> {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
+      response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+      DataBufferFactory dataBufferFactory = response.bufferFactory();
+      String result = JsonUtil.objToJson(HttpResult.operateFailure("未认证"));
+      DataBuffer buffer = dataBufferFactory.wrap(result.getBytes(
+          Charset.defaultCharset()));
+      return response.writeWith(Mono.just(buffer));
+    });
+  }
 }

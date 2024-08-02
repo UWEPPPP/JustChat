@@ -10,25 +10,26 @@ import www.raven.jc.entity.vo.NoticeVO;
  * @date 2023/12/04
  */
 public interface NoticeService {
-    /**
-     * load notice
-     *
-     * @return {@link List}<{@link NoticeVO}>
-     */
-    List<NoticeVO> loadNotice();
 
-    /**
-     * add friend apply
-     *
-     * @param friendName friend name
-     */
-    void addFriendApply(String friendName);
+  /**
+   * load notice
+   *
+   * @return {@link List}<{@link NoticeVO}>
+   */
+  List<NoticeVO> loadNotice();
 
-    /**
-     * done notification
-     *
-     * @param id id
-     */
-    void deleteNotification(Integer id);
+  /**
+   * add friend apply
+   *
+   * @param friendName friend name
+   */
+  void addFriendApply(String friendName);
+
+  /**
+   * done notification
+   *
+   * @param id id
+   */
+  void deleteNotification(Integer id);
 
 }

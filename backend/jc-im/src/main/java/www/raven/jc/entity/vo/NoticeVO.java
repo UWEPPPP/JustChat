@@ -14,9 +14,10 @@ import www.raven.jc.dto.UserInfoDTO;
 @Data
 @Accessors(chain = true)
 public class NoticeVO {
-    private Integer noticeId;
-    private String type;
-    private String data;
-    private Long timestamp;
-    private UserInfoDTO sender;
+
+  private Integer noticeId;
+  private String type;
+  private String data;
+  private Long timestamp;
+  private UserInfoDTO sender;
 }

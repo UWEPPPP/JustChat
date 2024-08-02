@@ -10,4 +10,5 @@ import www.raven.jc.entity.po.Moment;
  * @date 2024/02/21
  */
 public interface MomentMapper extends BaseMapper<Moment> {
+
 }

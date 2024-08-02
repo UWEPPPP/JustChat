@@ -23,7 +23,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDubbo
 @EnableAsync
 public class ImApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(ImApplication.class, args);
-    }
+
+  public static void main(String[] args) {
+    SpringApplication.run(ImApplication.class, args);
+  }
 }

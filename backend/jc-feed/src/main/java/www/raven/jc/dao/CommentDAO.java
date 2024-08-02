@@ -13,4 +13,5 @@ import www.raven.jc.entity.po.Comment;
  */
 @Repository
 public class CommentDAO extends ServiceImpl<CommentMapper, Comment> {
+
 }

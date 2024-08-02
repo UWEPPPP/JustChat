@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>www.Raven</groupId>
-        <artifactId>backend</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>jc-file</artifactId>
+  <dependencies>
+    <dependency>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>common-mvc</artifactId>
+      <groupId>www.Raven</groupId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <artifactId>minio</artifactId>
+      <groupId>io.minio</groupId>
+      <version>8.3.9</version>
+    </dependency>
+    <dependency>
+      <artifactId>common-redis</artifactId>
+      <groupId>www.Raven</groupId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <artifactId>spring-cloud-starter-alibaba-nacos-discovery
+      </artifactId>
+      <groupId>com.alibaba.cloud</groupId>
+    </dependency>
+  </dependencies>
 
-    <artifactId>jc-file</artifactId>
+  <modelVersion>4.0.0</modelVersion>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>www.Raven</groupId>
-            <artifactId>common-mvc</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.3.9</version>
-        </dependency>
-        <dependency>
-            <groupId>www.Raven</groupId>
-            <artifactId>common-redis</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery
-            </artifactId>
-        </dependency>
-    </dependencies>
+  <parent>
+    <artifactId>backend</artifactId>
+    <groupId>www.Raven</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
 </project>

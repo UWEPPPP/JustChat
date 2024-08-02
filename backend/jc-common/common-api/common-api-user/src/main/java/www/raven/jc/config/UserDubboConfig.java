@@ -14,9 +14,10 @@ import www.raven.jc.api.UserRpcService;
  */
 @Configuration
 public class UserDubboConfig {
-    @Bean
-    @DubboReference(interfaceClass = UserRpcService.class, version = "1.0.0", timeout = 15000)
-    public ReferenceBean<UserRpcService> userRpcService() {
-        return new ReferenceBean<>();
-    }
+
+  @Bean
+  @DubboReference(interfaceClass = UserRpcService.class, version = "1.0.0", timeout = 15000)
+  public ReferenceBean<UserRpcService> userRpcService() {
+    return new ReferenceBean<>();
+  }
 }

@@ -3,7 +3,7 @@ package www.raven.jc.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import www.raven.jc.model.CommonSerializable;
+import www.raven.jc.serializable.CommonSerializable;
 
 /**
  * role dto
@@ -15,5 +15,6 @@ import www.raven.jc.model.CommonSerializable;
 @Data
 @Accessors(chain = true)
 public class RoleDTO extends CommonSerializable {
-    private String value;
+
+  private String value;
 }

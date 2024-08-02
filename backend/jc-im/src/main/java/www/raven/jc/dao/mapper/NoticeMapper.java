@@ -10,4 +10,5 @@ import www.raven.jc.entity.po.Notice;
  * @date 2023/12/04
  */
 public interface NoticeMapper extends BaseMapper<Notice> {
+
 }

@@ -17,28 +17,28 @@ import org.springframework.messaging.support.MessageBuilder;
 @Slf4j
 public class MqUtil {
 
-    public static <T> void sendMsg(RocketMQTemplate rocketMQTemplate,
-        String topic,
-        String tag,
-        T data) {
-        rocketMQTemplate.asyncSend(topic + ":" + tag, createMsg(data), new SendCallback() {
-            @Override
-            public void onSuccess(
-                org.apache.rocketmq.client.producer.SendResult sendResult) {
-                log.info("--rocketMq send notice success");
-            }
+  public static <T> void sendMsg(RocketMQTemplate rocketMQTemplate,
+      String topic,
+      String tag,
+      T data) {
+    rocketMQTemplate.asyncSend(topic + ":" + tag, createMsg(data), new SendCallback() {
+      @Override
+      public void onSuccess(
+          org.apache.rocketmq.client.producer.SendResult sendResult) {
+        log.info("--rocketMq send notice success");
+      }
 
-            @Override
-            public void onException(Throwable e) {
-                log.error("--rocketMq send notice error", e);
-            }
-        });
-    }
+      @Override
+      public void onException(Throwable e) {
+        log.error("--rocketMq send notice error", e);
+      }
+    });
+  }
 
-    public static <T> Message<String> createMsg(T data) {
-        return MessageBuilder
-            .withPayload(JsonUtil.objToJson(data))
-            .setHeader(MessageConst.PROPERTY_KEYS, IdUtil.getSnowflakeNextIdStr()).build();
-    }
+  public static <T> Message<String> createMsg(T data) {
+    return MessageBuilder
+        .withPayload(JsonUtil.objToJson(data))
+        .setHeader(MessageConst.PROPERTY_KEYS, IdUtil.getSnowflakeNextIdStr()).build();
+  }
 
 }

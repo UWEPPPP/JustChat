@@ -13,12 +13,13 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class UserRoomVO {
-    private Integer roomId;
-    private String roomName;
-    /**
-     * 用founder profile 代替
-     */
-    private String roomProfile;
-    private String lastMsg;
-    private String lastMsgSender;
+
+  private Integer roomId;
+  private String roomName;
+  /**
+   * 用founder profile 代替
+   */
+  private String roomProfile;
+  private String lastMsg;
+  private String lastMsgSender;
 }

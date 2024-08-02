@@ -1,39 +1,39 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>www.Raven</groupId>
-        <artifactId>backend</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-    <artifactId>jc-common</artifactId>
-    <packaging>pom</packaging>
-    <url>http://maven.apache.org</url>
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <artifactId>jc-common</artifactId>
+  <build>
+    <finalName>common</finalName>
+  </build>
+  <dependencies>
+    <dependency>
+      <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>hutool-all</artifactId>
+      <groupId>cn.hutool</groupId>
+      <version>${hutool}</version>
+    </dependency>
+  </dependencies>
+  <modelVersion>4.0.0</modelVersion>
+  <modules>
+    <module>common-mq</module>
+    <module>common-api</module>
+    <module>common-util</module>
+    <module>common-redis</module>
+    <module>common-mp</module>
+    <module>common-mvc</module>
+    <module>common-job</module>
+  </modules>
 
-    <modules>
-        <module>common-mq</module>
-        <module>common-api</module>
-        <module>common-util</module>
-        <module>common-redis</module>
-        <module>common-mp</module>
-        <module>common-mvc</module>
-        <module>common-job</module>
-    </modules>
+  <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool}</version>
-        </dependency>
-    </dependencies>
+  <parent>
+    <artifactId>backend</artifactId>
+    <groupId>www.Raven</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
 
-    <build>
-        <finalName>common</finalName>
-    </build>
+  <url>http://maven.apache.org</url>
 </project>

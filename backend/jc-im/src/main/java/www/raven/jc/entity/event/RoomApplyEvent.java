@@ -16,7 +16,8 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomApplyEvent {
-    private Integer applyId;
-    private Integer founderId;
-    private Integer roomId;
+
+  private Integer applyId;
+  private Integer founderId;
+  private Integer roomId;
 }

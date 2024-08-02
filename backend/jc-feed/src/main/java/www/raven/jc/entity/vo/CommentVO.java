@@ -15,18 +15,19 @@ import www.raven.jc.entity.po.Comment;
 @Data
 @Accessors(chain = true)
 public class CommentVO {
-    @TableId
-    private String id;
-    private UserInfoDTO userInfo;
-    private String content;
-    private Long timestamp;
-    private String parentId;
 
-    public CommentVO(Comment comment, UserInfoDTO infoDTO) {
-        this.id = comment.getId();
-        this.userInfo = infoDTO;
-        this.content = comment.getContent();
-        this.timestamp = comment.getTimestamp();
-        this.parentId = comment.getParentId();
-    }
+  @TableId
+  private String id;
+  private UserInfoDTO userInfo;
+  private String content;
+  private Long timestamp;
+  private String parentId;
+
+  public CommentVO(Comment comment, UserInfoDTO infoDTO) {
+    this.id = comment.getId();
+    this.userInfo = infoDTO;
+    this.content = comment.getContent();
+    this.timestamp = comment.getTimestamp();
+    this.parentId = comment.getParentId();
+  }
 }

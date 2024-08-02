@@ -12,7 +12,8 @@ import lombok.Data;
  */
 @Data
 public class RoomIdModel {
-    @NotNull(message = "roomId不能为空")
-    @Min(value = 1, message = "roomId最小为1")
-    private Integer roomId;
+
+  @NotNull(message = "roomId不能为空")
+  @Min(value = 1, message = "roomId最小为1")
+  private Integer roomId;
 }

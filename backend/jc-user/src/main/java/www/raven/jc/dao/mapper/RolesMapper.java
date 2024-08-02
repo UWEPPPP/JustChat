@@ -10,4 +10,5 @@ import www.raven.jc.entity.po.Role;
  * @date 2023/11/28
  */
 public interface RolesMapper extends BaseMapper<Role> {
+
 }

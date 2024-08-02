@@ -10,4 +10,5 @@ import www.raven.jc.entity.po.Friend;
  * @date 2024/01/20
  */
 public interface FriendMapper extends BaseMapper<Friend> {
+
 }

@@ -25,33 +25,34 @@ import www.raven.jc.service.AuthService;
 @RestController
 @ResponseBody
 public class AuthController {
-    @Autowired
-    private AuthService authService;
-    @Autowired
-    private JwtProperty jwtProperty;
 
-    @PostMapping("/login")
-    public HttpResult<TokenVO> login(
-        @RequestBody @Validated LoginModel loginModel) {
-        return HttpResult.operateSuccess("登录成功", authService.login(loginModel));
-    }
+  @Autowired
+  private AuthService authService;
+  @Autowired
+  private JwtProperty jwtProperty;
 
-    @PostMapping("/register")
-    public HttpResult<TokenVO> register(
-        @RequestBody @Validated RegisterModel registerModel) {
-        return HttpResult.operateSuccess("注册成功", authService.registerCommonRole(registerModel));
-    }
+  @PostMapping("/login")
+  public HttpResult<TokenVO> login(
+      @RequestBody @Validated LoginModel loginModel) {
+    return HttpResult.operateSuccess("登录成功", authService.login(loginModel));
+  }
 
-    @GetMapping("/logout/{token}")
-    public HttpResult<Void> logout(
-        @PathVariable("token") @NotBlank String token) {
-        authService.logout(token);
-        return HttpResult.operateSuccess("登出成功");
-    }
+  @PostMapping("/register")
+  public HttpResult<TokenVO> register(
+      @RequestBody @Validated RegisterModel registerModel) {
+    return HttpResult.operateSuccess("注册成功", authService.registerCommonRole(registerModel));
+  }
 
-    @PostMapping("/refresh")
-    public HttpResult<TokenVO> refresh(@RequestBody @NotBlank String token) {
-        return HttpResult.operateSuccess("刷新成功", authService.refreshToken(token));
-    }
+  @GetMapping("/logout/{token}")
+  public HttpResult<Void> logout(
+      @PathVariable("token") @NotBlank String token) {
+    authService.logout(token);
+    return HttpResult.operateSuccess("登出成功");
+  }
+
+  @PostMapping("/refresh")
+  public HttpResult<TokenVO> refresh(@RequestBody @NotBlank String token) {
+    return HttpResult.operateSuccess("刷新成功", authService.refreshToken(token));
+  }
 
 }

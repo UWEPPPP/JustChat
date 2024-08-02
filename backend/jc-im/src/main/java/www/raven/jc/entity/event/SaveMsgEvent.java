@@ -17,6 +17,7 @@ import www.raven.jc.entity.po.Message;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SaveMsgEvent {
-    private Message message;
-    private String type;
+
+  private Message message;
+  private String type;
 }

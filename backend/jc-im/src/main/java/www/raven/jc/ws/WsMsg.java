@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class WsMsg {
-    private String message;
-    private List<Integer> to;
+
+  private String message;
+  private List<Integer> to;
 }

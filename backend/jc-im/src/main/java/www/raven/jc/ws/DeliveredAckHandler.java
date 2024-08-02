@@ -17,18 +17,20 @@ import www.raven.jc.entity.dto.MessageDTO;
 @Slf4j
 @Component
 public class DeliveredAckHandler implements BaseHandler {
-    @Autowired
-    private RedissonClient redissonClient;
 
-    @Override
-    public void onMessage(MessageDTO message, Session session) {
-        //从redis中删除所有已经送达的消息
-        Integer userId = message.getUserInfo().getUserId();
-        boolean delete = redissonClient.getScoredSortedSet(OfflineMessagesConstant.PREFIX + userId.toString()).delete();
-        if (delete) {
-            log.info("delete offline message success");
-        } else {
-            log.error("delete offline message fail");
-        }
+  @Autowired
+  private RedissonClient redissonClient;
+
+  @Override
+  public void onMessage(MessageDTO message, Session session) {
+    //从redis中删除所有已经送达的消息
+    Integer userId = message.getUserInfo().getUserId();
+    boolean delete = redissonClient.getScoredSortedSet(
+        OfflineMessagesConstant.PREFIX + userId.toString()).delete();
+    if (delete) {
+      log.info("delete offline message success");
+    } else {
+      log.error("delete offline message fail");
     }
+  }
 }

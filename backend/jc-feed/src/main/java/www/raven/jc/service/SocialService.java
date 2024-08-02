@@ -13,41 +13,42 @@ import www.raven.jc.entity.vo.MomentVO;
  * @date 2024/01/24
  */
 public interface SocialService {
-    /**
-     * release moment
-     *
-     * @param model model
-     */
-    void releaseMoment(MomentModel model);
 
-    /**
-     * delete moment
-     *
-     * @param momentId moment id
-     */
-    void deleteMoment(String momentId);
+  /**
+   * release moment
+   *
+   * @param model model
+   */
+  void releaseMoment(MomentModel model);
 
-    /**
-     * like moment
-     *
-     * @param likeModel like model
-     */
-    void likeMoment(LikeModel likeModel);
+  /**
+   * delete moment
+   *
+   * @param momentId moment id
+   */
+  void deleteMoment(String momentId);
 
-    /**
-     * comment moment
-     *
-     * @param model model
-     */
-    void commentMoment(CommentModel model);
+  /**
+   * like moment
+   *
+   * @param likeModel like model
+   */
+  void likeMoment(LikeModel likeModel);
 
-    /**
-     * query moment
-     *
-     * @param page page
-     * @param size size
-     * @return {@link List}<{@link MomentVO}>
-     */
-    List<MomentVO> queryMoment(int page, int size);
+  /**
+   * comment moment
+   *
+   * @param model model
+   */
+  void commentMoment(CommentModel model);
+
+  /**
+   * query moment
+   *
+   * @param page page
+   * @param size size
+   * @return {@link List}<{@link MomentVO}>
+   */
+  List<MomentVO> queryMoment(int page, int size);
 
 }

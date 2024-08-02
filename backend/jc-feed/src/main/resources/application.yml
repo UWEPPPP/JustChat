@@ -33,7 +33,6 @@ spring:
     password: 123456
   redis:
     address: redis://10.21.32.221:6379
-    password: 123456
   cache:
     type: redis
     #指定存活时间（ms）
@@ -49,6 +48,9 @@ spring:
     nacos:
       discovery:
         server-addr: 10.21.32.154:8848
+  data:
+    redis:
+      password: 123456
 mq:
   out_topic: ToIM
 server:

@@ -17,10 +17,11 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class UserRoom {
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-    private Integer userId;
-    private Integer roomId;
-    private int status;
-    private Date lastAckTime;
+
+  @TableId(value = "id", type = IdType.AUTO)
+  private Integer id;
+  private Integer userId;
+  private Integer roomId;
+  private int status;
+  private Date lastAckTime;
 }

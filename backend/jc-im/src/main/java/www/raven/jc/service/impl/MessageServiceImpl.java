@@ -1,5 +1,7 @@
 package www.raven.jc.service.impl;
 
+import static www.raven.jc.entity.po.Message.REDIS_KEY;
+
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -74,17 +76,18 @@ public class MessageServiceImpl implements MessageService {
   @Override
   public void saveOfflineMsgAndReadAck(Message message, List<Integer> userIds,
       Integer metaId) {
-    long timeStamp = message.getTimestamp().getTime();
+    long time = message.getTimestamp().getTime();
     // 进行用户的离线信息保存
     CompletableFuture<Void> redisFuture = CompletableFuture.runAsync(() -> {
       RBatch batch = redissonClient.createBatch();
       userIds.parallelStream().forEach(id -> {
         RScoredSortedSetAsync<Object> scoredSortedSet = batch.getScoredSortedSet(
             OfflineMessagesConstant.PREFIX + id.toString());
-        scoredSortedSet.addAsync(timeStamp, message);
+        scoredSortedSet.addAsync(time, message.getId());
       });
       batch.execute();
     });
+
     // 进行消息回执的批量插入
     CompletableFuture<Void> dbFuture = CompletableFuture.runAsync(() -> {
       List<MessageReadAck> ackList = userIds.stream().map(id ->
@@ -97,6 +100,7 @@ public class MessageServiceImpl implements MessageService {
           .toList();
       Assert.isTrue(messageReadAckDAO.saveBatch(ackList), "save ack fail");
     });
+
     // 等待两个异步操作完成
     CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(redisFuture, dbFuture);
     try {
@@ -109,9 +113,21 @@ public class MessageServiceImpl implements MessageService {
   @Override
   public List<MessageVO> getLatestOffline() {
     int userId = RequestUtil.getUserId(request);
-    RScoredSortedSet<Message> scoredSortedSet = redissonClient.getScoredSortedSet(
+    RScoredSortedSet<String> scoredSortedSet = redissonClient.getScoredSortedSet(
         OfflineMessagesConstant.PREFIX + userId);
-    Collection<Message> messages = scoredSortedSet.readAll();
+    Collection<String> messageIds = scoredSortedSet.readAll();
+    //根据messageIds先从缓存查数据
+    Map<String, Message> messageMap = redissonClient.getMap(REDIS_KEY);
+    List<Message> messages = new ArrayList<>();
+    for (String messageId : messageIds) {
+      if (messageMap.containsKey(messageId)) {
+        messages.add(messageMap.get(messageId));
+      }
+    }
+    //再从数据库查数据
+    List<Message> messages0 = messageDAO.getBaseMapper().selectList(
+        new QueryWrapper<Message>().in("id", messageIds));
+    messages.addAll(messages0);
     List<Integer> ids = messages.stream().map(Message::getSenderId).toList();
     RpcResult<List<UserInfoDTO>> batchInfo = userRpcService.getBatchInfo(ids);
     Map<Integer, UserInfoDTO> map = batchInfo.getData().stream()

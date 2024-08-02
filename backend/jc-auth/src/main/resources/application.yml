@@ -20,7 +20,6 @@ spring:
       enabled: true
   redis:
     address: redis://10.21.32.221:6379
-    password: 123456
   application:
     name: JC-Auth
   cloud:
@@ -31,6 +30,9 @@ spring:
     url: jdbc:mysql://10.21.32.154:3306/JustChat?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false&rewriteBatchedStatements=true
     username: root
     password: root
+  data:
+    redis:
+      password: 123456
 server:
   port: 8082
 jwt:

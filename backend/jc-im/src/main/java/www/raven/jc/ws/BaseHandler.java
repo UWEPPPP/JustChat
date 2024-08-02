@@ -20,33 +20,34 @@ import www.raven.jc.util.MqUtil;
  */
 
 public interface BaseHandler {
-    /**
-     * on message
-     *
-     * @param message message
-     * @param session session
-     */
-    void onMessage(MessageDTO message, Session session);
 
-    /**
-     * 广播消息(多实例间)
-     */
-    default void broadcast(RedissonClient redissonClient, List<Integer> userIds,
-        MessageDTO message,
-        RocketMQTemplate rocketMQTemplate) {
-        Map<String, List<Integer>> map = new HashMap<>();
-        // 按照topic给userId分组
-        for (Integer id : userIds) {
-            String wsTopic = redissonClient.getBucket("ws:" + id).get().toString();
-            List<Integer> thisTopicNeedSendIdList = map.computeIfAbsent(wsTopic, k -> new ArrayList<>());
-            thisTopicNeedSendIdList.add(id);
-        }
-        //根据分组发送消息
-        for (Map.Entry<String, List<Integer>> entry : map.entrySet()) {
-            String topic = entry.getKey();
-            List<Integer> theTopicIds = entry.getValue();
-            MqUtil.sendMsg(rocketMQTemplate, ImImMqConstant.TAGS_SEND_MESSAGE, topic,
-                new WsMsg().setMessage(JsonUtil.objToJson(message)).setTo(theTopicIds));
-        }
+  /**
+   * on message
+   *
+   * @param message message
+   * @param session session
+   */
+  void onMessage(MessageDTO message, Session session);
+
+  /**
+   * 广播消息(多实例间)
+   */
+  default void broadcast(RedissonClient redissonClient, List<Integer> userIds,
+      MessageDTO message,
+      RocketMQTemplate rocketMQTemplate) {
+    Map<String, List<Integer>> map = new HashMap<>();
+    // 按照topic给userId分组
+    for (Integer id : userIds) {
+      String wsTopic = redissonClient.getBucket("ws:" + id).get().toString();
+      List<Integer> thisTopicNeedSendIdList = map.computeIfAbsent(wsTopic, k -> new ArrayList<>());
+      thisTopicNeedSendIdList.add(id);
     }
+    //根据分组发送消息
+    for (Map.Entry<String, List<Integer>> entry : map.entrySet()) {
+      String topic = entry.getKey();
+      List<Integer> theTopicIds = entry.getValue();
+      MqUtil.sendMsg(rocketMQTemplate, ImImMqConstant.TAGS_SEND_MESSAGE, topic,
+          new WsMsg().setMessage(JsonUtil.objToJson(message)).setTo(theTopicIds));
+    }
+  }
 }

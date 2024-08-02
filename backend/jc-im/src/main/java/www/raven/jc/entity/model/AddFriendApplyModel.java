@@ -6,5 +6,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class AddFriendApplyModel {
-    private String friendName;
+
+  private String friendName;
 }

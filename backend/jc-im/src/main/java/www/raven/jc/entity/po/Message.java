@@ -20,11 +20,14 @@ import www.raven.jc.serializable.CommonSerializable;
 @Accessors(chain = true)
 @TableName(value = "message", schema = "public")
 public class Message extends CommonSerializable {
-    @TableId(value = "id", type = IdType.AUTO)
-    private String id;
-    private Integer senderId;
-    private String content;
-    private String type;
-    private String receiverId;
-    private Date timestamp;
+
+  public static final String REDIS_KEY = "message";
+
+  @TableId(value = "id", type = IdType.AUTO)
+  private String id;
+  private Integer senderId;
+  private String content;
+  private String type;
+  private String receiverId;
+  private Date timestamp;
 }

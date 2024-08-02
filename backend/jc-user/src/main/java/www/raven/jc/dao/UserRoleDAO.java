@@ -13,4 +13,5 @@ import www.raven.jc.entity.po.UserRole;
  */
 @Repository
 public class UserRoleDAO extends ServiceImpl<UserRoleMapper, UserRole> {
+
 }

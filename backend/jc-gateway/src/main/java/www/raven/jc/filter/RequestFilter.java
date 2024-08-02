@@ -29,45 +29,49 @@ import www.raven.jc.util.JsonUtil;
 @Slf4j
 @Component
 public class RequestFilter implements GlobalFilter, Ordered {
-    @Autowired
-    private SecurityProperty securityProperty;
 
-    @Override
-    public int getOrder() {
-        // -2 is response filter, request filter should be called before that
-        return -3;
-    }
+  @Autowired
+  private SecurityProperty securityProperty;
 
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange,
-        GatewayFilterChain chain) {
+  @Override
+  public int getOrder() {
+    // -2 is response filter, request filter should be called before that
+    return -3;
+  }
 
-        ServerHttpRequest request = exchange.getRequest();
-        log.info("RequestFilter执行");
-        log.info("收到一次请求");
-        log.info("Request Method: {}", request.getMethod());
-        log.info("Request URI: {}", request.getURI());
-        log.info("Request Headers: {}", request.getHeaders());
-        log.info("Request Query Params: {}", request.getQueryParams());
-        for (String path : securityProperty.getWordsArray()) {
-            if (request.getURI().getPath().contains(path)) {
-                return chain.filter(exchange);
-            }
-        }
-        long time = Long.parseLong(Objects.requireNonNull(request.getHeaders().get(JwtConstant.TIME)).getFirst());
-        if (time < System.currentTimeMillis()) {
-            // 获取响应对象
-            ServerHttpResponse response = exchange.getResponse();
-            // 设置响应的状态码和内容类型
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-            HttpResult<Object> result = HttpResult.operateFailure(ResultCode.TOKEN_EXPIRED_CODE, "Token expired, please reapply for a token");
-            // 返回响应
-            String responseBody = JsonUtil.objToJson(result);
-            // 返回响应
-            return response.writeWith(Mono.just(responseBody).map(str -> response.bufferFactory().wrap(str.getBytes(StandardCharsets.UTF_8))));
-        }
+  @Override
+  public Mono<Void> filter(ServerWebExchange exchange,
+      GatewayFilterChain chain) {
 
+    ServerHttpRequest request = exchange.getRequest();
+    log.info("RequestFilter执行");
+    log.info("收到一次请求");
+    log.info("Request Method: {}", request.getMethod());
+    log.info("Request URI: {}", request.getURI());
+    log.info("Request Headers: {}", request.getHeaders());
+    log.info("Request Query Params: {}", request.getQueryParams());
+    for (String path : securityProperty.getWordsArray()) {
+      if (request.getURI().getPath().contains(path)) {
         return chain.filter(exchange);
+      }
     }
+    long time = Long.parseLong(
+        Objects.requireNonNull(request.getHeaders().get(JwtConstant.TIME)).getFirst());
+    if (time < System.currentTimeMillis()) {
+      // 获取响应对象
+      ServerHttpResponse response = exchange.getResponse();
+      // 设置响应的状态码和内容类型
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
+      response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+      HttpResult<Object> result = HttpResult.operateFailure(ResultCode.TOKEN_EXPIRED_CODE,
+          "Token expired, please reapply for a token");
+      // 返回响应
+      String responseBody = JsonUtil.objToJson(result);
+      // 返回响应
+      return response.writeWith(Mono.just(responseBody)
+          .map(str -> response.bufferFactory().wrap(str.getBytes(StandardCharsets.UTF_8))));
+    }
+
+    return chain.filter(exchange);
+  }
 }

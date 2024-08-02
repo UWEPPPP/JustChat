@@ -10,7 +10,8 @@ import www.raven.jc.constant.JwtConstant;
  * @date 2024/02/06
  */
 public class RequestUtil {
-    public static int getUserId(HttpServletRequest request) {
-        return Integer.parseInt(request.getHeader(JwtConstant.USER_ID));
-    }
+
+  public static int getUserId(HttpServletRequest request) {
+    return Integer.parseInt(request.getHeader(JwtConstant.USER_ID));
+  }
 }
