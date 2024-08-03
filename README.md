@@ -1,4 +1,5 @@
-仿微信项目
+仿微信项目 参考文章如下：http://www.52im.net/thread-1611-1-1.html     http://www.52im.net/forum.php?mod=viewthread&tid=4564&highlight=%C9%E8%BC%C6     
+感谢52IM网站
 
 ## 技术栈
 
