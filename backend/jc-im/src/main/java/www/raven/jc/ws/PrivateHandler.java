@@ -49,7 +49,7 @@ public class PrivateHandler implements BaseHandler {
     List<Integer> ids = List.of(friendId);
     messageService.saveOfflineMsgAndReadAck(realMessage, ids);
     broadcast(redissonClient, ids, message, rocketMQTemplate);
-    RMap<String, Message> map = redissonClient.getMap("message");
+    RMap<String, Message> map = redissonClient.getMap(Message.REDIS_KEY);
     map.put(realMessage.getId(), realMessage);
   }
 }

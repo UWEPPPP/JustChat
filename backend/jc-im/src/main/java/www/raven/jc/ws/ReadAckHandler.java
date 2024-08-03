@@ -54,7 +54,7 @@ public class ReadAckHandler implements BaseHandler {
       session.getAsyncRemote().sendText("ack: success");
     } else {
       session.getAsyncRemote().sendText("ack: fail");
-      throw new RuntimeException("ack fail");
+      log.error("ack fail");
     }
   }
 }

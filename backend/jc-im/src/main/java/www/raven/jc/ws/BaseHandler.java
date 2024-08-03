@@ -23,9 +23,6 @@ public interface BaseHandler {
 
   /**
    * on message
-   *
-   * @param message message
-   * @param session session
    */
   void onMessage(MessageDTO message, Session session);
 
