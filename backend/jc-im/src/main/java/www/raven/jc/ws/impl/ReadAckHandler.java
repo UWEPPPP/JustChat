@@ -1,4 +1,4 @@
-package www.raven.jc.ws;
+package www.raven.jc.ws.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import jakarta.websocket.Session;
@@ -9,12 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import www.raven.jc.constant.WsMessageHandlerConstant;
 import www.raven.jc.dao.MessageReadAckDAO;
 import www.raven.jc.dao.UserRoomDAO;
 import www.raven.jc.entity.dto.MessageDTO;
 import www.raven.jc.entity.po.MessageReadAck;
 import www.raven.jc.entity.po.UserRoom;
 import www.raven.jc.util.JsonUtil;
+import www.raven.jc.ws.WsMessageHandler;
 
 /**
  * ack handler
@@ -24,7 +26,7 @@ import www.raven.jc.util.JsonUtil;
  */
 @Slf4j
 @Component
-public class ReadAckHandler implements BaseHandler {
+public class ReadAckHandler implements WsMessageHandler {
 
   @Autowired
   private UserRoomDAO userRoomDAO;
@@ -56,5 +58,10 @@ public class ReadAckHandler implements BaseHandler {
       session.getAsyncRemote().sendText("ack: fail");
       log.error("ack fail");
     }
+  }
+
+  @Override
+  public String getType() {
+    return WsMessageHandlerConstant.MSG_READ_ACK;
   }
 }

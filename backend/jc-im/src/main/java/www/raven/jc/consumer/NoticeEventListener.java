@@ -29,7 +29,7 @@ import www.raven.jc.event.model.DeleteNoticeEvent;
 import www.raven.jc.result.RpcResult;
 import www.raven.jc.template.AbstractMqListener;
 import www.raven.jc.util.JsonUtil;
-import www.raven.jc.ws.WebsocketService;
+import www.raven.jc.ws.WsTools;
 
 /**
  * message consumer
@@ -91,7 +91,7 @@ public class NoticeEventListener extends AbstractMqListener {
     map.put("type", SocialUserMqConstant.TAGS_MOMENT_NOTICE_MOMENT_FRIEND);
     List<Integer> idsFriend = friendInfos.getData().stream().map(UserInfoDTO::getUserId)
         .collect(Collectors.toList());
-    WebsocketService.sendBatchMessage(JsonUtil.objToJson(map), idsFriend);
+    WsTools.sendBatchMessage(JsonUtil.objToJson(map), idsFriend);
   }
 
   private void eventMomentNoticeLikeOrCommentEvent(String msg) {
@@ -101,7 +101,7 @@ public class NoticeEventListener extends AbstractMqListener {
     map.put("momentId", payload.getMomentId());
     map.put("msg", payload.getMsg());
     map.put("type", SocialUserMqConstant.TAGS_MOMENT_NOTICE_WITH_LIKE_OR_COMMENT);
-    WebsocketService.sendOneMessage(userId, JsonUtil.objToJson(map));
+    WsTools.sendOneMessage(userId, JsonUtil.objToJson(map));
   }
 
   /**
@@ -120,7 +120,7 @@ public class NoticeEventListener extends AbstractMqListener {
     if (founderBucket.isExists()) {
       HashMap<Object, Object> map = new HashMap<>(1);
       map.put("type", ImImMqConstant.TAGS_CHAT_ROOM_APPLY);
-      WebsocketService.sendOneMessage(founderId, JsonUtil.objToJson(map));
+      WsTools.sendOneMessage(founderId, JsonUtil.objToJson(map));
       log.info("--RocketMq 已推送通知给founder");
     } else {
       log.info("--RocketMq founder不在线");

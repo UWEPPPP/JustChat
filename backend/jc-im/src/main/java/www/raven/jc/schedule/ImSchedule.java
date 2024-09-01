@@ -1,9 +1,9 @@
 package www.raven.jc.schedule;
 
-import static www.raven.jc.constant.MessageConstant.FRIEND;
-import static www.raven.jc.constant.MessageConstant.ROOM;
+import static www.raven.jc.constant.WsMessageHandlerConstant.FRIEND;
+import static www.raven.jc.constant.WsMessageHandlerConstant.ROOM;
 import static www.raven.jc.entity.po.Message.REDIS_KEY;
-import static www.raven.jc.ws.WebsocketService.HEARTBEAT;
+import static www.raven.jc.ws.WsConnectionsCenter.HEARTBEAT;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -30,7 +30,7 @@ import www.raven.jc.entity.po.FriendChat;
 import www.raven.jc.entity.po.Message;
 import www.raven.jc.entity.po.MessageReadAck;
 import www.raven.jc.entity.po.Room;
-import www.raven.jc.ws.WebsocketService;
+import www.raven.jc.ws.WsConnectionsCenter;
 
 /**
  * ws schedule
@@ -64,10 +64,10 @@ public class ImSchedule {
   @Scheduled(cron = "0/10 * * * * ?")
   public void checkRoomWs() throws IOException {
     log.info(">>>>>>>>>>> xxl-job--心跳机制运作中");
-    CopyOnWriteArraySet<WebsocketService> sockets = WebsocketService.webSockets;
-    Map<Session, Integer> map = WebsocketService.HEARTBEAT_MAP;
+    CopyOnWriteArraySet<WsConnectionsCenter> sockets = WsConnectionsCenter.webSockets;
+    Map<Session, Integer> map = WsConnectionsCenter.HEARTBEAT_MAP;
     //遍历所有的WebSocket连接
-    for (WebsocketService socket : sockets) {
+    for (WsConnectionsCenter socket : sockets) {
       Session session = socket.getSession();
       if (session == null) {
         continue;
@@ -75,12 +75,12 @@ public class ImSchedule {
       //断开心跳数超过3次的连接
       if (map.get(session) >= 3) {
         session.close();
-        WebsocketService.webSockets.remove(socket);
-        WebsocketService.HEARTBEAT_MAP.remove(session);
+        WsConnectionsCenter.webSockets.remove(socket);
+        WsConnectionsCenter.HEARTBEAT_MAP.remove(session);
       }
     }
     //发出心跳
-    for (WebsocketService socket : sockets) {
+    for (WsConnectionsCenter socket : sockets) {
       Session session = socket.getSession();
       if (session == null) {
         continue;

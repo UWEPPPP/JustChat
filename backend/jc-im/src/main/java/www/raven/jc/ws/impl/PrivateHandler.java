@@ -1,4 +1,4 @@
-package www.raven.jc.ws;
+package www.raven.jc.ws.impl;
 
 import cn.hutool.core.util.IdUtil;
 import jakarta.websocket.Session;
@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import www.raven.jc.api.UserRpcService;
 import www.raven.jc.config.ImProperty;
+import www.raven.jc.constant.WsMessageHandlerConstant;
 import www.raven.jc.entity.dto.MessageDTO;
 import www.raven.jc.entity.po.Message;
 import www.raven.jc.service.MessageService;
+import www.raven.jc.ws.WsMessageHandler;
 
 /**
  * friend chat handler
@@ -24,7 +26,7 @@ import www.raven.jc.service.MessageService;
  */
 @Slf4j
 @Component
-public class PrivateHandler implements BaseHandler {
+public class PrivateHandler implements WsMessageHandler {
 
   @Autowired
   private MessageService messageService;
@@ -51,5 +53,10 @@ public class PrivateHandler implements BaseHandler {
     broadcast(redissonClient, ids, message, rocketMQTemplate);
     RMap<String, Message> map = redissonClient.getMap(Message.REDIS_KEY);
     map.put(realMessage.getId(), realMessage);
+  }
+
+  @Override
+  public String getType() {
+    return WsMessageHandlerConstant.FRIEND;
   }
 }

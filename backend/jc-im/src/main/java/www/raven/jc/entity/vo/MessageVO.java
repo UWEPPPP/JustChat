@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import www.raven.jc.constant.MessageConstant;
+import www.raven.jc.constant.WsMessageHandlerConstant;
 import www.raven.jc.dto.UserInfoDTO;
 import www.raven.jc.entity.po.Message;
 import www.raven.jc.serializable.CommonSerializable;
@@ -35,9 +35,9 @@ public class MessageVO extends CommonSerializable {
     this.time = message.getTimestamp();
     this.text = message.getContent();
     this.userInfoDTO = userInfoDTO;
-    if (Objects.equals(message.getType(), MessageConstant.FRIEND)) {
+    if (Objects.equals(message.getType(), WsMessageHandlerConstant.FRIEND)) {
       this.belongId = MessageUtil.resolve(message.getReceiverId(), message.getSenderId());
-    } else if (Objects.equals(message.getType(), MessageConstant.ROOM)) {
+    } else if (Objects.equals(message.getType(), WsMessageHandlerConstant.ROOM)) {
       this.belongId = Integer.parseInt(message.getReceiverId());
     }
 

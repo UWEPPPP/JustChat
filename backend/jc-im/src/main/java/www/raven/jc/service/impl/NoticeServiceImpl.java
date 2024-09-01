@@ -27,7 +27,7 @@ import www.raven.jc.result.RpcResult;
 import www.raven.jc.service.NoticeService;
 import www.raven.jc.util.JsonUtil;
 import www.raven.jc.util.RequestUtil;
-import www.raven.jc.ws.WebsocketService;
+import www.raven.jc.ws.WsTools;
 
 /**
  * notice service impl
@@ -99,7 +99,7 @@ public class NoticeServiceImpl implements NoticeService {
     map.put("applyId", applierId);
     map.put("type", ImUserMqConstant.TAGS_USER_FRIEND_APPLY);
     if (friendBucket.isExists()) {
-      WebsocketService.sendOneMessage(friend.getUserId(), JsonUtil.objToJson(map));
+      WsTools.sendOneMessage(friend.getUserId(), JsonUtil.objToJson(map));
     } else {
       log.info("receiver不在线");
     }

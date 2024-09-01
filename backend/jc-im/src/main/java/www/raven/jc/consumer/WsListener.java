@@ -6,10 +6,10 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 import www.raven.jc.constant.ImImMqConstant;
+import www.raven.jc.entity.model.WsMsgModel;
 import www.raven.jc.template.AbstractMqListener;
 import www.raven.jc.util.JsonUtil;
-import www.raven.jc.ws.WebsocketService;
-import www.raven.jc.ws.WsMsg;
+import www.raven.jc.ws.WsTools;
 
 /**
  * ws listener
@@ -29,8 +29,8 @@ public class WsListener extends AbstractMqListener {
 
   @Override
   public void onMessage0(String message, String tags) {
-    WsMsg wsMsg = JsonUtil.jsonToObj(message, WsMsg.class);
-    WebsocketService.sendBatchMessage(wsMsg.getMessage(), wsMsg.getTo());
+    WsMsgModel wsMsgModel = JsonUtil.jsonToObj(message, WsMsgModel.class);
+    WsTools.sendBatchMessage(wsMsgModel.getMessage(), wsMsgModel.getTo());
   }
 
 }

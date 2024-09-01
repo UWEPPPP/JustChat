@@ -1,4 +1,4 @@
-package www.raven.jc.ws;
+package www.raven.jc.ws.impl;
 
 import jakarta.websocket.Session;
 import lombok.extern.slf4j.Slf4j;
@@ -6,7 +6,9 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import www.raven.jc.constant.OfflineMessagesConstant;
+import www.raven.jc.constant.WsMessageHandlerConstant;
 import www.raven.jc.entity.dto.MessageDTO;
+import www.raven.jc.ws.WsMessageHandler;
 
 /**
  * delivered ack handler
@@ -16,7 +18,7 @@ import www.raven.jc.entity.dto.MessageDTO;
  */
 @Slf4j
 @Component
-public class DeliveredAckHandler implements BaseHandler {
+public class DeliveredAckHandler implements WsMessageHandler {
 
   @Autowired
   private RedissonClient redissonClient;
@@ -32,5 +34,10 @@ public class DeliveredAckHandler implements BaseHandler {
     } else {
       log.error("delete offline message fail");
     }
+  }
+
+  @Override
+  public String getType() {
+    return WsMessageHandlerConstant.MSG_DELIVERED_ACK;
   }
 }

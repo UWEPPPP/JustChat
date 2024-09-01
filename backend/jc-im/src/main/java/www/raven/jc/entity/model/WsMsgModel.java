@@ -1,4 +1,4 @@
-package www.raven.jc.ws;
+package www.raven.jc.entity.model;
 
 import java.util.List;
 import lombok.Data;
@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class WsMsg {
+public class WsMsgModel {
 
   private String message;
   private List<Integer> to;

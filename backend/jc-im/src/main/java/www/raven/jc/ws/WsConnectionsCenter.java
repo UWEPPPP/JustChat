@@ -8,7 +8,6 @@ import jakarta.websocket.Session;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -18,11 +17,14 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import www.raven.jc.config.ImProperty;
-import www.raven.jc.constant.MessageConstant;
 import www.raven.jc.dto.TokenDTO;
 import www.raven.jc.entity.dto.MessageDTO;
 import www.raven.jc.util.JsonUtil;
 import www.raven.jc.util.JwtUtil;
+import www.raven.jc.ws.impl.DeliveredAckHandler;
+import www.raven.jc.ws.impl.PrivateHandler;
+import www.raven.jc.ws.impl.ReadAckHandler;
+import www.raven.jc.ws.impl.RoomHandler;
 
 /**
  * notification handler
@@ -34,7 +36,7 @@ import www.raven.jc.util.JwtUtil;
 @Slf4j
 @ServerEndpoint("/ws/{token}")
 @Data
-public class WebsocketService {
+public class WsConnectionsCenter {
 
   /**
    * 在线连接数map
@@ -44,22 +46,15 @@ public class WebsocketService {
    * 心跳辅助map
    */
   public static final Map<Session, Integer> HEARTBEAT_MAP = new HashMap<>();
-
   public static final String HEARTBEAT = "ping";
-  /**
-   * concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
-   * 虽然@Component默认是单例模式的，但springboot还是会为每个websocket连接初始化一个bean，所以可以用一个静态set保存起来。
-   */
-  public static CopyOnWriteArraySet<WebsocketService> webSockets = new CopyOnWriteArraySet<>();
-
+  public static CopyOnWriteArraySet<WsConnectionsCenter> webSockets = new CopyOnWriteArraySet<>();
   private static RedissonClient redissonClient;
   private static ImProperty imProperty;
   private static PrivateHandler privateHandler;
   private static RoomHandler roomHandler;
   private static ReadAckHandler readAckHandler;
   private static DeliveredAckHandler deliveredAckHandler;
-
-  public BaseHandler baseHandler;
+  private static WsMessageHandlerFactory wsMessageHandlerFactory;
   /**
    * 该连接的用户id
    */
@@ -69,31 +64,21 @@ public class WebsocketService {
    **/
   protected Session session;
 
-  public static void sendOneMessage(Integer id, String message) {
-    Session session = SESSION_POOL.get(id);
-    if (session != null && session.isOpen()) {
-      try {
-        log.info("-Websocket: 单点消息:{}", message);
-        session.getAsyncRemote().sendText(message);
-      } catch (Exception e) {
-        log.error(e.getMessage());
-      }
-    }
+  @Autowired
+  public void setRedissonClient(RedissonClient redissonClient) {
+    WsConnectionsCenter.redissonClient = redissonClient;
   }
 
-  public static void sendBatchMessage(String message, List<Integer> ids) {
-    log.info("websocket:广播消息:{}", message);
-    for (Integer id : ids) {
-      Session session = SESSION_POOL.get(id);
-      if (session != null && session.isOpen()) {
-        try {
-          session.getAsyncRemote().sendText(message);
-        } catch (Exception e) {
-          log.error(e.getMessage());
-        }
-      }
-    }
+  @Autowired
+  public void setImProperty(ImProperty imProperty) {
+    WsConnectionsCenter.imProperty = imProperty;
   }
+
+  @Autowired
+  public void setWsMessageHandlerFactory(WsMessageHandlerFactory wsMessageHandlerFactory) {
+    WsConnectionsCenter.wsMessageHandlerFactory = wsMessageHandlerFactory;
+  }
+
 
   @OnOpen
   public void onOpen(Session session,
@@ -131,27 +116,13 @@ public class WebsocketService {
     }
     log.info("----WebSocket收到客户端发来的消息:{}", message);
     MessageDTO messageDTO = JsonUtil.jsonToObj(message, MessageDTO.class);
-    switch (messageDTO.getType()) {
-      case MessageConstant.FRIEND:
-        setBaseHandler(privateHandler);
-        log.info("收到好友消息");
-        break;
-      case MessageConstant.ROOM:
-        setBaseHandler(roomHandler);
-        log.info("收到群消息");
-        break;
-      case MessageConstant.MSG_DELIVERED_ACK:
-        setBaseHandler(readAckHandler);
-        log.info("收到送达回执");
-        break;
-      case MessageConstant.MSG_READ_ACK:
-        setBaseHandler(readAckHandler);
-        log.info("收到已读回执");
-        break;
-      default:
-        log.error("未知信息");
+    WsMessageHandler handler = WsConnectionsCenter.wsMessageHandlerFactory.getHandler(
+        messageDTO.getType());
+    if (handler != null) {
+      handler.onMessage(messageDTO, this.session);
+    } else {
+      log.error("未找到对应的消息处理器");
     }
-    this.baseHandler.onMessage(messageDTO, this.session);
   }
 
   @OnError
@@ -159,15 +130,6 @@ public class WebsocketService {
     SESSION_POOL.remove(this.userId);
     log.error("--Websocket:内部错误");
     log.error("Stack trace: {}", (Object) error.getStackTrace());
-  }
-
-  public void sendAllMessage(String message) {
-    log.info("--Websocket: 广播消息:{}", message);
-    for (WebsocketService handler : webSockets) {
-      if (handler.session.isOpen()) {
-        handler.session.getAsyncRemote().sendText(message);
-      }
-    }
   }
 
   @Override
@@ -180,34 +142,4 @@ public class WebsocketService {
     return super.equals(obj);
   }
 
-  @Autowired
-  public void setPrivateHandler(PrivateHandler privateHandler) {
-    WebsocketService.privateHandler = privateHandler;
-  }
-
-  @Autowired
-  public void setRoomHandler(RoomHandler roomHandler) {
-    WebsocketService.roomHandler = roomHandler;
-  }
-
-  @Autowired
-  public void setReadAckHandler(ReadAckHandler readAckHandler) {
-    WebsocketService.readAckHandler = readAckHandler;
-  }
-
-  @Autowired
-  public void setDeliveredAckHandler(
-      DeliveredAckHandler deliveredAckHandler) {
-    WebsocketService.deliveredAckHandler = deliveredAckHandler;
-  }
-
-  @Autowired
-  public void setRedissonClient(RedissonClient redissonClient) {
-    WebsocketService.redissonClient = redissonClient;
-  }
-
-  @Autowired
-  public void setImProperty(ImProperty imProperty) {
-    WebsocketService.imProperty = imProperty;
-  }
 }

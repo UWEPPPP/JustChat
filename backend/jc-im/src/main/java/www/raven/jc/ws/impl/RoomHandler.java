@@ -1,4 +1,4 @@
-package www.raven.jc.ws;
+package www.raven.jc.ws.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import jakarta.websocket.Session;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import www.raven.jc.api.UserRpcService;
 import www.raven.jc.config.ImProperty;
 import www.raven.jc.constant.ImImMqConstant;
-import www.raven.jc.constant.MessageConstant;
+import www.raven.jc.constant.WsMessageHandlerConstant;
 import www.raven.jc.dao.UserRoomDAO;
 import www.raven.jc.entity.dto.MessageDTO;
 import www.raven.jc.entity.event.SaveMsgEvent;
@@ -22,6 +22,7 @@ import www.raven.jc.entity.po.UserRoom;
 import www.raven.jc.service.MessageService;
 import www.raven.jc.util.JsonUtil;
 import www.raven.jc.util.MqUtil;
+import www.raven.jc.ws.WsMessageHandler;
 
 /**
  * web socket service
@@ -31,7 +32,7 @@ import www.raven.jc.util.MqUtil;
  */
 @Slf4j
 @Component
-public class RoomHandler implements BaseHandler {
+public class RoomHandler implements WsMessageHandler {
 
   @Autowired
   private MessageService messageService;
@@ -62,7 +63,12 @@ public class RoomHandler implements BaseHandler {
     broadcast(redissonClient, userIds, message, rocketMQTemplate);
     MqUtil.sendMsg(rocketMQTemplate, ImImMqConstant.TAGS_SAVE_HISTORY_MSG,
         imProperty.getInTopic(), JsonUtil.objToJson(new SaveMsgEvent().setMessage(realMessage)
-            .setType(MessageConstant.ROOM)));
+            .setType(WsMessageHandlerConstant.ROOM)));
+  }
+
+  @Override
+  public String getType() {
+    return WsMessageHandlerConstant.ROOM;
   }
 
 }

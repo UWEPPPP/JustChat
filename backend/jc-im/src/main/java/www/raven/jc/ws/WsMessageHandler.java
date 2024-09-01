@@ -9,6 +9,7 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.redisson.api.RedissonClient;
 import www.raven.jc.constant.ImImMqConstant;
 import www.raven.jc.entity.dto.MessageDTO;
+import www.raven.jc.entity.model.WsMsgModel;
 import www.raven.jc.util.JsonUtil;
 import www.raven.jc.util.MqUtil;
 
@@ -19,12 +20,14 @@ import www.raven.jc.util.MqUtil;
  * @date 2024/01/21
  */
 
-public interface BaseHandler {
+public interface WsMessageHandler {
 
   /**
    * on message
    */
   void onMessage(MessageDTO message, Session session);
+
+  String getType();
 
   /**
    * 广播消息(多实例间)
@@ -44,7 +47,7 @@ public interface BaseHandler {
       String topic = entry.getKey();
       List<Integer> theTopicIds = entry.getValue();
       MqUtil.sendMsg(rocketMQTemplate, ImImMqConstant.TAGS_SEND_MESSAGE, topic,
-          new WsMsg().setMessage(JsonUtil.objToJson(message)).setTo(theTopicIds));
+          new WsMsgModel().setMessage(JsonUtil.objToJson(message)).setTo(theTopicIds));
     }
   }
 }
