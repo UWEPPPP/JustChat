@@ -2,7 +2,9 @@ package www.raven.jc.aop;
 
 import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -27,26 +29,26 @@ import www.raven.jc.util.JwtUtil;
 @Order(1)
 public class TokenAspect {
 
-  @Autowired
-  private HttpServletRequest request;
-  @Autowired
-  private JwtProperty jwtProperty;
+	@Autowired
+	private HttpServletRequest request;
+	@Autowired
+	private JwtProperty jwtProperty;
 
-  @Pointcut("@annotation(www.raven.jc.annotions.Auth)")
-  public void pointcut() {
-  }
+	@Pointcut("@annotation(www.raven.jc.annotions.Auth)")
+	public void pointcut() {
+	}
 
-  @Before("pointcut() && @annotation(auth)")
-  public void before(www.raven.jc.annotions.Auth auth) {
-    log.info("----Token收到访问级接口 级别:{}", auth.value());
-    String token = request.getHeader(JwtConstant.TOKEN);
-    if (StrUtil.isEmpty(token)) {
-      throw new RuntimeException("权限不足");
-    }
-    TokenDTO dto = JwtUtil.parseToken(token, jwtProperty.key);
-    List<String> role = dto.getRole();
-    if (!role.contains(auth.value())) {
-      throw new RuntimeException("权限不足");
-    }
-  }
+	@Before("pointcut() && @annotation(auth)")
+	public void before(www.raven.jc.annotions.Auth auth) {
+		log.info("----Token收到访问级接口 级别:{}", auth.value());
+		String token = request.getHeader(JwtConstant.TOKEN);
+		if (StrUtil.isEmpty(token)) {
+			throw new RuntimeException("权限不足");
+		}
+		TokenDTO dto = JwtUtil.parseToken(token, jwtProperty.key);
+		List<String> role = dto.getRole();
+		if (!role.contains(auth.value())) {
+			throw new RuntimeException("权限不足");
+		}
+	}
 }

@@ -8,11 +8,11 @@ package www.raven.jc.constant;
  */
 public class MqConstant {
 
-  /**
-   * 过期时间默认10分钟
-   */
-  public final static long EXPIRE_TIME = 10;
+	/**
+	 * 过期时间默认10分钟
+	 */
+	public final static long EXPIRE_TIME = 10;
 
-  public static final String HEAD = "rocketMq_msg_";
+	public static final String HEAD = "rocketMq_msg_";
 
 }

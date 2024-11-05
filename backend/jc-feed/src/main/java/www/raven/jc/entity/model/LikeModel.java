@@ -16,12 +16,12 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class LikeModel {
 
-  @NotBlank(message = "momentId不能为空")
-  private String momentId;
-  @NotNull(message = "momentUserId不能为空")
-  @Min(value = 1, message = "momentUserId最小为1")
-  private Integer momentUserId;
-  @NotNull(message = "momentTimeStamp不能为空")
-  @Min(value = 1, message = "momentTimeStamp最小为1")
-  private Long momentTimeStamp;
+	@NotBlank(message = "momentId不能为空")
+	private String momentId;
+	@NotNull(message = "momentUserId不能为空")
+	@Min(value = 1, message = "momentUserId最小为1")
+	private Integer momentUserId;
+	@NotNull(message = "momentTimeStamp不能为空")
+	@Min(value = 1, message = "momentTimeStamp最小为1")
+	private Long momentTimeStamp;
 }

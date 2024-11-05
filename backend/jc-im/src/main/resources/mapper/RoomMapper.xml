@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="www.raven.jc.dao.mapper.RoomMapper">
 
-  <select id="selectRoomByUserId" resultType="www.raven.jc.entity.po.Room">
-    SELECT r.*
-    FROM user_room ur
-           JOIN room r ON ur.room_id = r.room_id
-    WHERE ur.user_id = #{userId}
-      and ur.status = 3
-  </select>
+    <select id="selectRoomByUserId" resultType="www.raven.jc.entity.po.Room">
+        SELECT r.*
+        FROM user_room ur
+                 JOIN room r ON ur.room_id = r.room_id
+        WHERE ur.user_id = #{userId}
+          and ur.status = 3
+    </select>
 
 </mapper>

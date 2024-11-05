@@ -19,11 +19,11 @@ import www.raven.jc.serializable.CommonSerializable;
 @TableName(value = "comment", schema = "public")
 public class Comment extends CommonSerializable {
 
-  @TableId
-  private String id;
-  private Integer userId;
-  private String momentId;
-  private String content;
-  private Long timestamp;
-  private String parentId;
+	@TableId
+	private String id;
+	private Integer userId;
+	private String momentId;
+	private String content;
+	private Long timestamp;
+	private String parentId;
 }

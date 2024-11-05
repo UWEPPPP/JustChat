@@ -53,6 +53,8 @@
     <file url="file://$PROJECT_DIR$/jc-common/common-aop/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-common/common-api/common-api-base/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-common/common-api/common-api-base/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jc-common/common-api/common-api-id/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jc-common/common-api/common-api-id/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-common/common-api/common-api-im/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-common/common-api/common-api-im/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-common/common-api/common-api-user/src/main/java" charset="UTF-8" />
@@ -83,6 +85,8 @@
     <file url="file://$PROJECT_DIR$/jc-common/common-ws/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jc-distribute-id/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jc-distribute-id/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-feed/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-feed/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jc-file/src/main/java" charset="UTF-8" />

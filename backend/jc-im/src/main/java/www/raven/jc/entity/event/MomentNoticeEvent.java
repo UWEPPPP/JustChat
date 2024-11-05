@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class MomentNoticeEvent {
 
-  private String momentId;
-  private Integer userId;
-  private String msg;
+	private String momentId;
+	private Integer userId;
+	private String msg;
 }

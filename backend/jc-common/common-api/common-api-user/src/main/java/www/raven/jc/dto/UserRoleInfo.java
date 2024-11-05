@@ -16,20 +16,20 @@ import www.raven.jc.serializable.CommonSerializable;
 @Accessors(chain = true)
 public class UserRoleInfo extends CommonSerializable {
 
-  /**
-   * user id
-   */
-  private Integer userId;
-  /**
-   * user name
-   */
-  private String username;
-  /**
-   * user password
-   */
-  private String password;
-  /**
-   * user role
-   */
-  private String role;
+	/**
+	 * user id
+	 */
+	private Integer userId;
+	/**
+	 * user name
+	 */
+	private String username;
+	/**
+	 * user password
+	 */
+	private String password;
+	/**
+	 * user role
+	 */
+	private String role;
 }

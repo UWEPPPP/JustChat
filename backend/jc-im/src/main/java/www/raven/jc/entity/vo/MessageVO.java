@@ -1,7 +1,5 @@
 package www.raven.jc.entity.vo;
 
-import java.util.Date;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +10,9 @@ import www.raven.jc.dto.UserInfoDTO;
 import www.raven.jc.entity.po.Message;
 import www.raven.jc.serializable.CommonSerializable;
 import www.raven.jc.util.MessageUtil;
+
+import java.util.Date;
+import java.util.Objects;
 
 /**
  * message vo
@@ -26,21 +27,21 @@ import www.raven.jc.util.MessageUtil;
 @AllArgsConstructor
 public class MessageVO extends CommonSerializable {
 
-  private Date time;
-  private String text;
-  private UserInfoDTO userInfoDTO;
-  private Integer belongId;
+	private Date time;
+	private String text;
+	private UserInfoDTO userInfoDTO;
+	private Integer belongId;
 
-  public MessageVO(Message message, UserInfoDTO userInfoDTO) {
-    this.time = message.getTimestamp();
-    this.text = message.getContent();
-    this.userInfoDTO = userInfoDTO;
-    if (Objects.equals(message.getType(), WsMessageHandlerConstant.FRIEND)) {
-      this.belongId = MessageUtil.resolve(message.getReceiverId(), message.getSenderId());
-    } else if (Objects.equals(message.getType(), WsMessageHandlerConstant.ROOM)) {
-      this.belongId = Integer.parseInt(message.getReceiverId());
-    }
+	public MessageVO(Message message, UserInfoDTO userInfoDTO) {
+		this.time = message.getUpdateAt();
+		this.text = message.getContent();
+		this.userInfoDTO = userInfoDTO;
+		if (Objects.equals(message.getType(), WsMessageHandlerConstant.FRIEND)) {
+			this.belongId = MessageUtil.resolve(message.getReceiverId(), message.getSenderId());
+		} else if (Objects.equals(message.getType(), WsMessageHandlerConstant.ROOM)) {
+			this.belongId = Integer.parseInt(message.getReceiverId());
+		}
 
-  }
+	}
 
 }

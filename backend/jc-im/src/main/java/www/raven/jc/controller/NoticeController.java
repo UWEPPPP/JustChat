@@ -1,7 +1,9 @@
 package www.raven.jc.controller;
 
 import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,18 +29,18 @@ import www.raven.jc.service.NoticeService;
 @Slf4j
 public class NoticeController {
 
-  @Autowired
-  private NoticeService noticeService;
+	@Autowired
+	private NoticeService noticeService;
 
-  @GetMapping("/getNotice")
-  public HttpResult<List<NoticeVO>> getNotice() {
-    return HttpResult.operateSuccess("查找成功", noticeService.loadNotice());
-  }
+	@GetMapping("/getNotice")
+	public HttpResult<List<NoticeVO>> getNotice() {
+		return HttpResult.operateSuccess("查找成功", noticeService.loadNotice());
+	}
 
-  @PostMapping("/addFriendApply")
-  public HttpResult<Void> addFriendApply(
-      @RequestBody @NotNull AddFriendApplyModel model) {
-    noticeService.addFriendApply(model.getFriendName());
-    return HttpResult.operateSuccess("添加好友申请成功");
-  }
+	@PostMapping("/addFriendApply")
+	public HttpResult<Void> addFriendApply(
+			@RequestBody @NotNull AddFriendApplyModel model) {
+		noticeService.addFriendApply(model.getFriendName());
+		return HttpResult.operateSuccess("添加好友申请成功");
+	}
 }

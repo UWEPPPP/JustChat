@@ -8,6 +8,6 @@ package www.raven.jc.constant;
  */
 public class TimelineFeedConstant {
 
-  public static final String PREFIX = "moment_";
+	public static final String PREFIX = "moment_";
 
 }

@@ -2,6 +2,7 @@ package www.raven.jc.entity.vo;
 
 import java.io.Serializable;
 import java.util.List;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 import www.raven.jc.dto.UserInfoDTO;
@@ -16,12 +17,12 @@ import www.raven.jc.dto.UserInfoDTO;
 @Accessors(chain = true)
 public class MomentVO implements Serializable {
 
-  private String momentId;
-  private UserInfoDTO userInfo;
-  private String content;
-  private String img;
-  private List<LikeVO> likes;
-  private List<CommentVO> comments;
-  private Long timestamp;
+	private String momentId;
+	private UserInfoDTO userInfo;
+	private String content;
+	private String img;
+	private List<LikeVO> likes;
+	private List<CommentVO> comments;
+	private Long timestamp;
 
 }

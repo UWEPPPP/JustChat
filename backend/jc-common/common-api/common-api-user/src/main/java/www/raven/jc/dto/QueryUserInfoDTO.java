@@ -16,6 +16,6 @@ import www.raven.jc.serializable.CommonSerializable;
 @Accessors(chain = true)
 public class QueryUserInfoDTO extends CommonSerializable {
 
-  private String column;
-  private String text;
+	private String column;
+	private String text;
 }

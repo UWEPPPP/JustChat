@@ -14,8 +14,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class AllRoomVO {
 
-  private Integer roomId;
-  private String founder;
-  private Integer maxPeople;
-  private String description;
+	private Integer roomId;
+	private String founder;
+	private Integer maxPeople;
+	private String description;
 }

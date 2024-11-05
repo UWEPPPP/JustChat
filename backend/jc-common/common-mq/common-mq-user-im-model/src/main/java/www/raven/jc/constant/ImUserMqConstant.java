@@ -8,10 +8,10 @@ package www.raven.jc.constant;
  */
 public class ImUserMqConstant {
 
-  /**
-   * User模块
-   */
-  public static final String TAGS_USER_FRIEND_APPLY = "FRIEND_APPLY";
-  public static final String TAGS_DELETE_NOTICE = "NOTICE_DELETE";
+	/**
+	 * User模块
+	 */
+	public static final String TAGS_USER_FRIEND_APPLY = "FRIEND_APPLY";
+	public static final String TAGS_DELETE_NOTICE = "NOTICE_DELETE";
 
 }

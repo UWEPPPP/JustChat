@@ -1,6 +1,7 @@
 package www.raven.jc.entity.vo;
 
 import java.util.List;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -8,7 +9,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ChunkVO {
 
-  private String uploadId;
-  private List<String> urls;
-  private String previewUrl;
+	private String uploadId;
+	private List<String> urls;
+	private String previewUrl;
 }

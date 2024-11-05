@@ -2,7 +2,6 @@ package www.raven.jc.entity.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import www.raven.jc.dto.UserInfoDTO;
 
 /**
  * message dto
@@ -13,10 +12,8 @@ import www.raven.jc.dto.UserInfoDTO;
 @Data
 @Accessors(chain = true)
 public class MessageDTO {
-
-  private Long time;
-  private String text;
-  private UserInfoDTO userInfo;
-  private Integer belongId;
-  private String type;
+	private String text;
+	private Integer userId;
+	private Integer belongId;
+	private String type;
 }

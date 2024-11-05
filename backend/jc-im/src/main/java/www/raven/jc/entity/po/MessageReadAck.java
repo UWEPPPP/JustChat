@@ -17,12 +17,12 @@ import lombok.experimental.Accessors;
 @TableName(value = "message_read_ack", schema = "public")
 public class MessageReadAck {
 
-  @TableId(value = "id", type = IdType.AUTO)
-  private String id;
-  private String messageId;
-  private Integer senderId;
-  private Integer receiverId;
-  private Integer roomId;
-  private Boolean ifRead;
-  private Long createTime;
+	@TableId(value = "id", type = IdType.AUTO)
+	private String id;
+	private String messageId;
+	private Integer senderId;
+	private Integer receiverId;
+	private Integer roomId;
+	private Boolean ifRead;
+	private Long createTime;
 }

@@ -10,6 +10,6 @@ import java.time.Duration;
  */
 public class UserConstant {
 
-  public static final String PREFIX = "user:";
-  public static final Duration EXPIRE_TIME = Duration.ofDays(1);
+	public static final String PREFIX = "user:";
+	public static final Duration EXPIRE_TIME = Duration.ofDays(1);
 }

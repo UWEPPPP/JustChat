@@ -11,14 +11,14 @@ import java.io.Serializable;
  */
 public class CommonSerializable implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
-  public CommonSerializable() {
-  }
+	public CommonSerializable() {
+	}
 
-  @Override
-  public String toString() {
-    return "CommonSerializable{}";
-  }
+	@Override
+	public String toString() {
+		return "CommonSerializable{}";
+	}
 }

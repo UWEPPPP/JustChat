@@ -13,6 +13,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class TokenVO {
 
-  private String token;
-  private Long expireTime;
+	private String token;
+	private Long expireTime;
 }

@@ -1,6 +1,7 @@
 package www.raven.jc;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,7 +25,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 public class ImApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(ImApplication.class, args);
-  }
+	public static void main(String[] args) {
+		SpringApplication.run(ImApplication.class, args);
+	}
 }

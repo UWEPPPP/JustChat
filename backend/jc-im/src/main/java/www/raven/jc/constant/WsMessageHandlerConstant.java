@@ -8,8 +8,8 @@ package www.raven.jc.constant;
  */
 public class WsMessageHandlerConstant {
 
-  public static final String FRIEND = "friend";
-  public static final String ROOM = "room";
-  public static final String MSG_READ_ACK = "msg_ack";
-  public static final String MSG_DELIVERED_ACK = "msg_delivered_ack";
+	public static final String FRIEND = "friend";
+	public static final String ROOM = "room";
+	public static final String MSG_READ_ACK = "msg_ack";
+	public static final String MSG_DELIVERED_ACK = "msg_delivered_ack";
 }

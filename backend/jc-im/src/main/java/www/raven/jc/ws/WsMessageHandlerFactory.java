@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,15 +17,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class WsMessageHandlerFactory {
 
-  private Map<String, WsMessageHandler> handlerMap;
+	private Map<String, WsMessageHandler> handlerMap;
 
-  @Autowired
-  public WsMessageHandlerFactory(List<WsMessageHandler> handlerList) {
-    handlerMap = handlerList.stream()
-        .collect(Collectors.toMap(WsMessageHandler::getType, Function.identity()));
-  }
+	@Autowired
+	public WsMessageHandlerFactory(List<WsMessageHandler> handlerList) {
+		handlerMap = handlerList.stream()
+				.collect(Collectors.toMap(WsMessageHandler::getType, Function.identity()));
+	}
 
-  public WsMessageHandler getHandler(String type) {
-    return handlerMap.get(type);
-  }
+	public WsMessageHandler getHandler(String type) {
+		return handlerMap.get(type);
+	}
 }

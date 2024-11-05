@@ -16,7 +16,7 @@ import www.raven.jc.serializable.CommonSerializable;
 @Accessors(chain = true)
 public class UserInfoDTO extends CommonSerializable {
 
-  private Integer userId;
-  private String username;
-  private String profile;
+	private Integer userId;
+	private String username;
+	private String profile;
 }

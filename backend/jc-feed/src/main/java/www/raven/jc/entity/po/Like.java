@@ -18,8 +18,8 @@ import www.raven.jc.serializable.CommonSerializable;
 @TableName(value = "like", schema = "public")
 public class Like extends CommonSerializable {
 
-  private String id;
-  private Integer userId;
-  private String momentId;
-  private Long timestamp;
+	private String id;
+	private Integer userId;
+	private String momentId;
+	private Long timestamp;
 }

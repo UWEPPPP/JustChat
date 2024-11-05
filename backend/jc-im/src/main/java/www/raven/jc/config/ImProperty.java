@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 @Data
 public class ImProperty {
 
-  @Value("${mq.ws_topic}")
-  private String wsTopic;
-  @Value("${mq.in_topic}")
-  private String inTopic;
+	@Value("${mq.ws_topic}")
+	private String wsTopic;
+	@Value("${mq.in_topic}")
+	private String inTopic;
 }

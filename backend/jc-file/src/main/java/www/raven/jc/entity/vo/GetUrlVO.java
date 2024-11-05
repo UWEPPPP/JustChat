@@ -7,6 +7,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class GetUrlVO {
 
-  private String uploadUrl;
-  private String previewUrl;
+	private String uploadUrl;
+	private String previewUrl;
 }

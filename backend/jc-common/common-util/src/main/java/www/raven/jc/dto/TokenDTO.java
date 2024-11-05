@@ -1,6 +1,7 @@
 package www.raven.jc.dto;
 
 import java.util.List;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,7 +15,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class TokenDTO {
 
-  private Integer userId;
-  private List<String> role;
-  private Long expireTime;
+	private Integer userId;
+	private List<String> role;
+	private Long expireTime;
 }

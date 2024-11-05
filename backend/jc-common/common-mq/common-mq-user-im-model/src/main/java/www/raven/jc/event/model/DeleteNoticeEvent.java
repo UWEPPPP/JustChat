@@ -15,5 +15,5 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class DeleteNoticeEvent {
 
-  private int noticeId;
+	private int noticeId;
 }

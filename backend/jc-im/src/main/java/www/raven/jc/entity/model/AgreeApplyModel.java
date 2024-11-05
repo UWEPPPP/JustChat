@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class AgreeApplyModel {
 
-  private Integer noticeId;
-  private Integer userId;
-  private Integer roomId;
+	private Integer noticeId;
+	private Integer userId;
+	private Integer roomId;
 }

@@ -8,7 +8,7 @@ package www.raven.jc.constant;
  */
 public class ApplyStatusConstant {
 
-  public static final int APPLY_STATUS_APPLY = 1;
-  public static final int APPLY_STATUS_REFUSE = 2;
-  public static final int APPLY_STATUS_AGREE = 3;
+	public static final int APPLY_STATUS_APPLY = 1;
+	public static final int APPLY_STATUS_REFUSE = 2;
+	public static final int APPLY_STATUS_AGREE = 3;
 }

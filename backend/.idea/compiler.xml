@@ -19,10 +19,12 @@
         <module name="auth" />
         <module name="social" />
         <module name="common-mq-feed-im-model" />
+        <module name="jc-distribute-id" />
         <module name="common-mp" />
         <module name="jc-user" />
         <module name="common-redis" />
         <module name="common-mq-user-im-model" />
+        <module name="common-api-id" />
         <module name="jc-auth" />
         <module name="common-mvc" />
         <module name="common-ws" />

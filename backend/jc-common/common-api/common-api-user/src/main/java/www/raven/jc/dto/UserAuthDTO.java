@@ -17,7 +17,7 @@ import www.raven.jc.serializable.CommonSerializable;
 @Accessors(chain = true)
 public class UserAuthDTO extends CommonSerializable {
 
-  private Integer userId;
-  private String username;
-  private String password;
+	private Integer userId;
+	private String username;
+	private String password;
 }

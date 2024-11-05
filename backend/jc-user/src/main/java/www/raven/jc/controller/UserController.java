@@ -28,45 +28,45 @@ import www.raven.jc.util.RequestUtil;
 @Slf4j
 public class UserController {
 
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private HttpServletRequest request;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private HttpServletRequest request;
 
-  @GetMapping("/defaultInfo")
-  public HttpResult<UserInfoDTO> defaultInfo() {
-    int userId = RequestUtil.getUserId(request);
-    return HttpResult.operateSuccess("查找成功", userService.querySingleInfo(userId));
-  }
+	@GetMapping("/defaultInfo")
+	public HttpResult<UserInfoDTO> defaultInfo() {
+		int userId = RequestUtil.getUserId(request);
+		return HttpResult.operateSuccess("查找成功", userService.querySingleInfo(userId));
+	}
 
-  @PostMapping("/userLogout")
-  HttpResult<Void> saveLogOutTime(@RequestBody @NotNull Integer userId) {
-    userService.saveTime(userId);
-    return HttpResult.operateSuccess("登出成功");
-  }
+	@PostMapping("/userLogout")
+	HttpResult<Void> saveLogOutTime(@RequestBody @NotNull Integer userId) {
+		userService.saveTime(userId);
+		return HttpResult.operateSuccess("登出成功");
+	}
 
-  @PostMapping("/setProfile")
-  public HttpResult<Void> setProfile(
-      @RequestParam("profile") @NotNull String profile) {
-    int userId = RequestUtil.getUserId(request);
-    userService.updateByColumn(userId, "profile", profile);
-    return HttpResult.operateSuccess("设置头像成功");
-  }
+	@PostMapping("/setProfile")
+	public HttpResult<Void> setProfile(
+			@RequestParam("profile") @NotNull String profile) {
+		int userId = RequestUtil.getUserId(request);
+		userService.updateByColumn(userId, "profile", profile);
+		return HttpResult.operateSuccess("设置头像成功");
+	}
 
-  @PostMapping("/setSignature")
-  public HttpResult<Void> setSignature(
-      @RequestParam("signature") @NotNull String signature) {
-    int userId = RequestUtil.getUserId(request);
-    userService.updateByColumn(userId, "signature", signature);
-    return HttpResult.operateSuccess("设置签名成功");
-  }
+	@PostMapping("/setSignature")
+	public HttpResult<Void> setSignature(
+			@RequestParam("signature") @NotNull String signature) {
+		int userId = RequestUtil.getUserId(request);
+		userService.updateByColumn(userId, "signature", signature);
+		return HttpResult.operateSuccess("设置签名成功");
+	}
 
-  @PostMapping("/setUsername")
-  public HttpResult<Void> setUsername(
-      @RequestParam("username") @NotNull String username) {
-    int userId = RequestUtil.getUserId(request);
-    userService.updateByColumn(userId, "username", username);
-    return HttpResult.operateSuccess("重命名成功");
-  }
+	@PostMapping("/setUsername")
+	public HttpResult<Void> setUsername(
+			@RequestParam("username") @NotNull String username) {
+		int userId = RequestUtil.getUserId(request);
+		userService.updateByColumn(userId, "username", username);
+		return HttpResult.operateSuccess("重命名成功");
+	}
 
 }

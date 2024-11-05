@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ScoredSortedSetProperty {
 
-  @Value("${redis.sorted-set.max-size}")
-  public Integer maxSize;
-  @Value("${redis.sorted-set.expire-days}")
-  public Integer expireDays;
+	@Value("${redis.sorted-set.max-size}")
+	public Integer maxSize;
+	@Value("${redis.sorted-set.expire-days}")
+	public Integer expireDays;
 }

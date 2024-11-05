@@ -18,19 +18,19 @@ import org.springframework.context.annotation.Configuration;
 public class
 RedissonConfiguration {
 
-  @Value("${spring.redis.address}")
-  private String address;
+	@Value("${spring.redis.address}")
+	private String address;
 
-  @Value("${spring.redis.password:}")
-  private String password;
+	@Value("${spring.redis.password:}")
+	private String password;
 
-  @Bean
-  public RedissonClient redissonClient() {
-    Config config = new Config();
-    SingleServerConfig singleServerConfig = config.useSingleServer();
-    singleServerConfig.setPassword(password).setAddress(address);
-    return Redisson.create(config);
-  }
+	@Bean
+	public RedissonClient redissonClient() {
+		Config config = new Config();
+		SingleServerConfig singleServerConfig = config.useSingleServer();
+		singleServerConfig.setPassword(password).setAddress(address);
+		return Redisson.create(config);
+	}
 
 }
 

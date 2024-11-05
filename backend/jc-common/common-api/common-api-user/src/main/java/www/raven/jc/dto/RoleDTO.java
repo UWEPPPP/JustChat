@@ -16,5 +16,5 @@ import www.raven.jc.serializable.CommonSerializable;
 @Accessors(chain = true)
 public class RoleDTO extends CommonSerializable {
 
-  private String value;
+	private String value;
 }

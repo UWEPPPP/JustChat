@@ -12,12 +12,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JwtProperty {
 
-  @Value("${jwt.key}")
-  public String key;
+	@Value("${jwt.key}")
+	public String key;
 
-  /**
-   * 默认7天 expire time
-   */
-  @Value("${jwt.expire}")
-  public Long expireTime;
+	/**
+	 * 默认7天 expire time
+	 */
+	@Value("${jwt.expire}")
+	public Long expireTime;
 }

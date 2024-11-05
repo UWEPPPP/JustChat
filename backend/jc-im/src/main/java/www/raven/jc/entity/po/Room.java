@@ -17,11 +17,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Room {
 
-  @TableId(value = "room_id", type = IdType.AUTO)
-  private Integer roomId;
-  private String roomName;
-  private String roomDescription;
-  private Integer founderId;
-  private Integer maxPeople;
-  private String lastMsgId;
+	@TableId(value = "room_id", type = IdType.AUTO)
+	private Integer roomId;
+	private String roomName;
+	private String roomDescription;
+	private Integer founderId;
+	private Integer maxPeople;
+	private String lastMsgId;
 }

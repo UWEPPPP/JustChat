@@ -14,31 +14,31 @@ import www.raven.jc.serializable.CommonSerializable;
 @Data
 public class RpcResult<T> extends CommonSerializable {
 
-  private boolean isSuccess;
-  private String message;
-  private T data;
+	private boolean isSuccess;
+	private String message;
+	private T data;
 
-  private RpcResult(boolean isSuccess, String message, T data) {
-    this.isSuccess = isSuccess;
-    this.message = message;
-    this.data = data;
-  }
+	private RpcResult(boolean isSuccess, String message, T data) {
+		this.isSuccess = isSuccess;
+		this.message = message;
+		this.data = data;
+	}
 
-  private RpcResult(boolean isSuccess, String message) {
-    this.isSuccess = isSuccess;
-    this.message = message;
-  }
+	private RpcResult(boolean isSuccess, String message) {
+		this.isSuccess = isSuccess;
+		this.message = message;
+	}
 
-  public static <T> RpcResult<T> operateFailure(String message) {
-    return new RpcResult<>(false, message);
-  }
+	public static <T> RpcResult<T> operateFailure(String message) {
+		return new RpcResult<>(false, message);
+	}
 
-  public static <T> RpcResult<T> operateSuccess(String message) {
-    return new RpcResult<>(true, message);
-  }
+	public static <T> RpcResult<T> operateSuccess(String message) {
+		return new RpcResult<>(true, message);
+	}
 
-  public static <T> RpcResult<T> operateSuccess(String message, T data) {
-    return new RpcResult<>(true, message, data);
-  }
+	public static <T> RpcResult<T> operateSuccess(String message, T data) {
+		return new RpcResult<>(true, message, data);
+	}
 
 }

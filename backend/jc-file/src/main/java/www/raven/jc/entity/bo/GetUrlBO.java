@@ -11,5 +11,5 @@ import lombok.Data;
 @Data
 public class GetUrlBO {
 
-  private String md5;
+	private String md5;
 }

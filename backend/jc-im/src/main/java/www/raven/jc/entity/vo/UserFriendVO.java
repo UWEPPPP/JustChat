@@ -13,9 +13,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class UserFriendVO {
 
-  private Integer friendId;
-  private String friendName;
-  private String friendProfile;
-  private String lastMsg;
-  private String lastMsgSender;
+	private Integer friendId;
+	private String friendName;
+	private String friendProfile;
+	private String lastMsg;
+	private String lastMsgSender;
 }

@@ -15,13 +15,13 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PagesFriendMsgModel {
 
-  @NotNull(message = "friendId不能为空")
-  @Min(value = 1, message = "friendId最小为1")
-  private Integer friendId;
-  @NotNull(message = "page不能为空")
-  @Min(value = 0, message = "page最小为0")
-  private Integer page;
-  @NotNull(message = "size不能为空")
-  @Min(value = 1, message = "size最小为1")
-  private Integer size;
+	@NotNull(message = "friendId不能为空")
+	@Min(value = 1, message = "friendId最小为1")
+	private Integer friendId;
+	@NotNull(message = "page不能为空")
+	@Min(value = 0, message = "page最小为0")
+	private Integer page;
+	@NotNull(message = "size不能为空")
+	@Min(value = 1, message = "size最小为1")
+	private Integer size;
 }

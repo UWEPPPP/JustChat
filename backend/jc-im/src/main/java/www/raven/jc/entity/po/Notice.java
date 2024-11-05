@@ -17,11 +17,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Notice {
 
-  @TableId(value = "id", type = IdType.AUTO)
-  private Integer id;
-  private Integer userId;
-  private String type;
-  private String data;
-  private Integer senderId;
-  private Long timestamp;
+	@TableId(value = "id", type = IdType.AUTO)
+	private Integer id;
+	private Integer userId;
+	private String type;
+	private String data;
+	private Integer senderId;
+	private Long timestamp;
 }

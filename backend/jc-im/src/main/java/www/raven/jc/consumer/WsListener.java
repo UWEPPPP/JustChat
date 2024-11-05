@@ -23,14 +23,14 @@ import www.raven.jc.ws.WsTools;
 @RocketMQMessageListener(consumerGroup = "${mq.ws_consumer_group}", topic = "${mq.ws_topic}", messageModel = MessageModel.CLUSTERING, selectorExpression = ImImMqConstant.TAGS_SEND_MESSAGE)
 public class WsListener extends AbstractMqListener {
 
-  public WsListener(RedissonClient redissonClient) {
-    super(redissonClient);
-  }
+	public WsListener(RedissonClient redissonClient) {
+		super(redissonClient);
+	}
 
-  @Override
-  public void onMessage0(String message, String tags) {
-    WsMsgModel wsMsgModel = JsonUtil.jsonToObj(message, WsMsgModel.class);
-    WsTools.sendBatchMessage(wsMsgModel.getMessage(), wsMsgModel.getTo());
-  }
+	@Override
+	public void onMessage0(String message, String tags) {
+		WsMsgModel wsMsgModel = JsonUtil.jsonToObj(message, WsMsgModel.class);
+		WsTools.sendBatchMessage(wsMsgModel.getMessage(), wsMsgModel.getTo());
+	}
 
 }

@@ -1,6 +1,7 @@
 package www.raven.jc.entity.vo;
 
 import java.util.List;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,7 +16,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class RealRoomVO {
 
-  private List<DisplayRoomVO> rooms;
-  private Integer total;
+	private List<DisplayRoomVO> rooms;
+	private Integer total;
 }
 

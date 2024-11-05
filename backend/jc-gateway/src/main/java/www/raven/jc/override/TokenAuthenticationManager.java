@@ -16,9 +16,9 @@ import reactor.core.publisher.Mono;
 @Primary
 public class TokenAuthenticationManager implements ReactiveAuthenticationManager {
 
-  @Override
-  @SuppressWarnings("unchecked")
-  public Mono<Authentication> authenticate(Authentication authentication) {
-    return Mono.just(authentication);
-  }
+	@Override
+	@SuppressWarnings("unchecked")
+	public Mono<Authentication> authenticate(Authentication authentication) {
+		return Mono.just(authentication);
+	}
 }

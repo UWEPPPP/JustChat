@@ -8,6 +8,6 @@ package www.raven.jc.constant;
  */
 public class NoticeConstant {
 
-  public static final String TYPE_JOIN_ROOM_APPLY = "join_room_apply";
-  public static final String TYPE_ADD_FRIEND_APPLY = "add_friend_apply";
+	public static final String TYPE_JOIN_ROOM_APPLY = "join_room_apply";
+	public static final String TYPE_ADD_FRIEND_APPLY = "add_friend_apply";
 }
