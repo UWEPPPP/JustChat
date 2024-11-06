@@ -77,7 +77,6 @@ public class SocialServiceImpl implements SocialService {
 				.setTimestamp(System.currentTimeMillis());
 		Assert.isTrue(momentDAO.getBaseMapper().insert(moment) > 0, "发布失败");
 		timelineFeedService.insertMomentFeed(userId, moment);
-		feedMQService.handleAsyncSaveCommentEvent(moment);
 		feedMQService.handleNotifyEvent(moment.getId(), userId, "发布了新的朋友圈",
 				SocialUserMqConstant.TAGS_MOMENT_NOTICE_MOMENT_FRIEND);
 	}
@@ -111,7 +110,7 @@ public class SocialServiceImpl implements SocialService {
 		if (!Objects.equals(model.getCommentId(), NOT_REPLY)) {
 			comment.setParentId(model.getCommentId());
 		}
-		Assert.isTrue(commentDAO.getBaseMapper().insert(comment) > 0, "评论失败");
+		feedMQService.handleAsyncSaveCommentEvent(comment);
 		//发布更新事件
 		feedMQService.handleNotifyEvent(model.getMomentId(), model.getMomentUserId(), "有人回复了你的评论",
 				SocialUserMqConstant.TAGS_MOMENT_NOTICE_WITH_LIKE_OR_COMMENT);

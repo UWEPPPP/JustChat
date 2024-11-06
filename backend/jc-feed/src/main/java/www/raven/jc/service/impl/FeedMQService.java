@@ -4,8 +4,8 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import www.raven.jc.entity.po.Comment;
 import www.raven.jc.entity.po.Like;
-import www.raven.jc.entity.po.Moment;
 import www.raven.jc.event.model.MomentNoticeEvent;
 import www.raven.jc.util.MqUtil;
 
@@ -31,9 +31,9 @@ public class FeedMQService {
 		MqUtil.sendMsg(rocketMQTemplate, inTopic, LIKE, like);
 	}
 
-	public void handleAsyncSaveCommentEvent(Moment moment) {
+	public void handleAsyncSaveCommentEvent(Comment comment) {
 		MqUtil.sendMsg(rocketMQTemplate, inTopic, COMMENT,
-				moment);
+				comment);
 	}
 
 	public void handleNotifyEvent(String momentId, Integer userId, String msg,
