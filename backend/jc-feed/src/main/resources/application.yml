@@ -53,6 +53,7 @@ spring:
       password: 123456
 mq:
   out_topic: ToIM
+  in_topic: ToFeed
 server:
   port: 8071
 redis:

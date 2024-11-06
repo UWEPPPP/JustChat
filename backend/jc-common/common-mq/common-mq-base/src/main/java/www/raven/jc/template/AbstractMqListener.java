@@ -1,16 +1,16 @@
 package www.raven.jc.template;
 
-import static www.raven.jc.constant.MqConstant.HEAD;
-
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.redisson.api.RedissonClient;
 import www.raven.jc.constant.MqConstant;
 import www.raven.jc.util.JsonUtil;
+
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+import static www.raven.jc.constant.MqConstant.HEAD;
 
 /**
  * 通用MQListener模板
@@ -62,5 +62,5 @@ public abstract class AbstractMqListener implements RocketMQListener<MessageExt>
 	/**
 	 * 实际的消息处理逻辑
 	 */
-	public abstract void onMessage0(String message1, String tags);
+	public abstract void onMessage0(String jsonMessage, String tag);
 }

@@ -4,20 +4,12 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import www.raven.jc.api.UserRpcService;
 import www.raven.jc.constant.SocialUserMqConstant;
@@ -34,12 +26,16 @@ import www.raven.jc.entity.po.Moment;
 import www.raven.jc.entity.vo.CommentVO;
 import www.raven.jc.entity.vo.LikeVO;
 import www.raven.jc.entity.vo.MomentVO;
-import www.raven.jc.event.model.MomentNoticeEvent;
 import www.raven.jc.result.RpcResult;
 import www.raven.jc.service.SocialService;
 import www.raven.jc.service.TimelineFeedService;
-import www.raven.jc.util.MqUtil;
 import www.raven.jc.util.RequestUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * social service impl
@@ -66,11 +62,10 @@ public class SocialServiceImpl implements SocialService {
 	@Autowired
 	private RedissonClient redissonClient;
 	@Autowired
-	private RocketMQTemplate rocketMQTemplate;
-	@Autowired
 	private TimelineFeedService timelineFeedService;
-	@Value("${mq.out_topic}")
-	private String outTopic;
+	@Resource
+	private FeedMQService feedMQService;
+
 
 	@Override
 	public void releaseMoment(MomentModel model) {
@@ -82,7 +77,8 @@ public class SocialServiceImpl implements SocialService {
 				.setTimestamp(System.currentTimeMillis());
 		Assert.isTrue(momentDAO.getBaseMapper().insert(moment) > 0, "发布失败");
 		timelineFeedService.insertMomentFeed(userId, moment);
-		handleEvent(moment.getId(), userId, "发布了新的朋友圈",
+		feedMQService.handleAsyncSaveCommentEvent(moment);
+		feedMQService.handleNotifyEvent(moment.getId(), userId, "发布了新的朋友圈",
 				SocialUserMqConstant.TAGS_MOMENT_NOTICE_MOMENT_FRIEND);
 	}
 
@@ -99,8 +95,8 @@ public class SocialServiceImpl implements SocialService {
 		Like like = new Like().setId(IdUtil.getSnowflakeNextIdStr())
 				.setMomentId(likeModel.getMomentId()).setTimestamp(System.currentTimeMillis())
 				.setUserId(userId);
-		Assert.isTrue(likeDAO.getBaseMapper().insert(like) > 0, "点赞失败");
-		handleEvent(likeModel.getMomentId(), likeModel.getMomentUserId(), "有人点赞了你的朋友圈",
+		feedMQService.handelAsyncSaveLikeEvent(like);
+		feedMQService.handleNotifyEvent(likeModel.getMomentId(), likeModel.getMomentUserId(), "有人点赞了你的朋友圈",
 				SocialUserMqConstant.TAGS_MOMENT_INTERNAL_LIKE_RECORD);
 	}
 
@@ -117,7 +113,7 @@ public class SocialServiceImpl implements SocialService {
 		}
 		Assert.isTrue(commentDAO.getBaseMapper().insert(comment) > 0, "评论失败");
 		//发布更新事件
-		handleEvent(model.getMomentId(), model.getMomentUserId(), "有人回复了你的评论",
+		feedMQService.handleNotifyEvent(model.getMomentId(), model.getMomentUserId(), "有人回复了你的评论",
 				SocialUserMqConstant.TAGS_MOMENT_NOTICE_WITH_LIKE_OR_COMMENT);
 	}
 
@@ -192,9 +188,5 @@ public class SocialServiceImpl implements SocialService {
 		});
 	}
 
-	private void handleEvent(String momentId, Integer userId, String msg,
-	                         String tag) {
-		MqUtil.sendMsg(rocketMQTemplate, tag, outTopic,
-				new MomentNoticeEvent().setMomentId(momentId).setUserId(userId).setMsg(msg));
-	}
+
 }

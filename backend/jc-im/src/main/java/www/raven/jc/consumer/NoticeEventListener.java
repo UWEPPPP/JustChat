@@ -1,11 +1,6 @@
 package www.raven.jc.consumer;
 
 import cn.hutool.core.lang.Assert;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -32,6 +27,10 @@ import www.raven.jc.result.RpcResult;
 import www.raven.jc.template.AbstractMqListener;
 import www.raven.jc.util.JsonUtil;
 import www.raven.jc.ws.WsTools;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * message consumer
@@ -63,19 +62,19 @@ public class NoticeEventListener extends AbstractMqListener {
 	}
 
 	@Override
-	public void onMessage0(String message, String tags) {
-		switch (tags) {
+	public void onMessage0(String jsonMessage, String tag) {
+		switch (tag) {
 			case ImImMqConstant.TAGS_CHAT_ROOM_APPLY:
-				eventUserJoinRoomApply(message);
+				eventUserJoinRoomApply(jsonMessage);
 				break;
 			case SocialUserMqConstant.TAGS_MOMENT_NOTICE_MOMENT_FRIEND:
-				eventMomentNoticeFriendEvent(message);
+				eventMomentNoticeFriendEvent(jsonMessage);
 				break;
 			case SocialUserMqConstant.TAGS_MOMENT_NOTICE_WITH_LIKE_OR_COMMENT:
-				eventMomentNoticeLikeOrCommentEvent(message);
+				eventMomentNoticeLikeOrCommentEvent(jsonMessage);
 				break;
 			case ImUserMqConstant.TAGS_DELETE_NOTICE:
-				eventDeleteNotice(message);
+				eventDeleteNotice(jsonMessage);
 				break;
 			default:
 				log.info("--RocketMq 非法的消息，不处理");

@@ -28,8 +28,8 @@ public class WsListener extends AbstractMqListener {
 	}
 
 	@Override
-	public void onMessage0(String message, String tags) {
-		WsMsgModel wsMsgModel = JsonUtil.jsonToObj(message, WsMsgModel.class);
+	public void onMessage0(String jsonMessage, String tag) {
+		WsMsgModel wsMsgModel = JsonUtil.jsonToObj(jsonMessage, WsMsgModel.class);
 		WsTools.sendBatchMessage(wsMsgModel.getMessage(), wsMsgModel.getTo());
 	}
 
